@@ -1,0 +1,62 @@
+/* Estilo para el menú de navegación */
+.navbar-light .navbar-nav .nav-link {
+    color: #333; /* Cambiar el color del texto cuando se pasa el cursor sobre él */
+}
+
+/* Efecto de transición de color en los enlaces del menú de navegación */
+.navbar-light .navbar-nav .nav-link:hover {
+    color: #007BFF; /* Cambiar el color del texto al pasar el cursor sobre él */
+    transition: color 0.3s ease-in-out; /* Agregar una transición suave */
+}
+
+/* Estilos para los botones */
+.custom-btn {
+    border-radius: 5px; /* Agrega bordes redondeados a los botones */
+}
+
+.btn-warning {
+    background-color: #ffc107; /* Cambia el color de fondo de los botones de advertencia (Editar) */
+    border-color: #ffc107; /* Cambia el color del borde de los botones de advertencia */
+    color: #343a40; /* Cambia el color del texto de los botones de advertencia */
+}
+
+.btn-warning:hover {
+    background-color: #ffca2b; /* Cambia el color de fondo de los botones de advertencia al pasar el ratón por encima */
+    border-color: #ffca2b; /* Cambia el color del borde de los botones de advertencia al pasar el ratón por encima */
+}
+
+.btn-danger {
+    background-color: #dc3545; /* Cambia el color de fondo de los botones peligrosos (Eliminar) */
+    border-color: #dc3545; /* Cambia el color del borde de los botones peligrosos */
+    color: #ffffff; /* Cambia el color del texto de los botones peligrosos */
+}
+
+.btn-danger:hover {
+    background-color: #e94b5b; /* Cambia el color de fondo de los botones peligrosos al pasar el ratón por encima */
+    border-color: #e94b5b; /* Cambia el color del borde de los botones peligrosos al pasar el ratón por encima */
+}
+
+/* Estilos para las tablas */
+.table {
+    font-size: 16px; /* Cambia el tamaño de fuente de las tablas */
+    background-color: #ffffff; /* Cambia el color de fondo de las tablas */
+}
+
+.table th {
+    background-color: #343a40; /* Cambia el color de fondo de las celdas de encabezado de la tabla */
+    color: #ffffff; /* Cambia el color del texto en las celdas de encabezado de la tabla */
+}
+
+/* Estilos para los menús desplegables */
+.custom-dropdown .dropdown-menu {
+    background-color: #343a40; /* Cambia el color de fondo del menú desplegable */
+}
+
+.custom-dropdown .dropdown-item {
+    color: #ffffff; /* Cambia el color del texto de los elementos del menú desplegable */
+}
+
+.custom-dropdown .dropdown-item:hover {
+    background-color: #343a40; /* Cambia el color de fondo de los elementos del menú desplegable al pasar el ratón por encima */
+    color: #ffffff; /* Cambia el color del texto de los elementos del menú desplegable al pasar el ratón por encima */
+}
