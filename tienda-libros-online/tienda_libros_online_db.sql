@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-10-2023 a las 03:15:38
+-- Tiempo de generación: 10-10-2023 a las 03:57:47
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -58,7 +58,10 @@ CREATE TABLE `autor` (
 --
 
 INSERT INTO `autor` (`id`, `nombre`, `apellido`) VALUES
-(1, 'Stephen', 'King');
+(1, 'Stephen', 'King'),
+(2, 'Edgar Allan', 'Poe'),
+(3, 'Lewis', 'Carroll'),
+(4, 'Howard Phillips', 'Lovecraft');
 
 -- --------------------------------------------------------
 
@@ -76,7 +79,9 @@ CREATE TABLE `categorias` (
 --
 
 INSERT INTO `categorias` (`id`, `nombre`) VALUES
-(1, 'Novela');
+(1, 'Novela'),
+(2, 'Terror'),
+(3, 'Historico');
 
 -- --------------------------------------------------------
 
@@ -98,7 +103,8 @@ CREATE TABLE `libros` (
 --
 
 INSERT INTO `libros` (`id`, `titulo`, `autor_id`, `descripcion`, `categoria_id`, `portada`) VALUES
-(1, 'Carrie', 1, 'Carrie, una joven de apariencia insignificante, acosada por sus compañeras de instituto, vive con su madre, una fanática religiosa. Un día en las duchas, la primera menstruación de Carrie provoca las burlas de las demás chicas y desencadena una sucesión de hechos sobrenaturales y terroríficos.', 1, 'carrie.jpg');
+(4, 'Carrie', 1, 'Carrie White, una tímida adolescente críada por una fanática religosa es humillada constantemente por su compañeros de instituto. Sin embargo, Carrie no es una chica cualquiera, la joven posee poderes psíquicos que se manifiestan cuando se siente dominada por la ira. El día del baile de graduación la situación llega a hacérsele insoportable.\r\n', 2, '6524ae5f6ae925.14558092.jpg'),
+(5, 'Las aventuras de Alicia en el país de las maravillas', 3, 'La historia cuenta cómo una niña llamada Alicia cae por un agujero, encontrándose en un mundo peculiar y extraño, poblado por humanos y criaturas antropomórficas. El libro juega con la lógica, dando a la novela gran popularidad tanto en niños como en adultos.', 1, '6524ae6edb3410.74253652.jpeg');
 
 --
 -- Índices para tablas volcadas
@@ -142,19 +148,19 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT de la tabla `autor`
 --
 ALTER TABLE `autor`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `categorias`
 --
 ALTER TABLE `categorias`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `libros`
 --
 ALTER TABLE `libros`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
