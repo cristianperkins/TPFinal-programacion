@@ -12,7 +12,7 @@ include "db_conexion.php";
 
 # Incluir la función de los libros
 include "php/func-libro.php";
-$libros = get_all_books($conn);
+$libros = get_all_books($conn, 'ASC');
 
 # Incluir la función de los autores
 include "php/func-autor.php";
@@ -69,64 +69,64 @@ $categorias = get_all_categories($conn);
 
         <!-- Tabla para mostrar los libros -->
 
-            <h4>Agregar Libros</h4>
-            <table id="libros-table" class="table table-bordered shadow">
-                <thead>
+        <h4>Agregar Libros</h4>
+        <table id="libros-table" class="table table-bordered shadow">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Portada</th>
+                    <th>Título</th>
+                    <th>Autor</th>
+                    <th>Descripción</th>
+                    <th>Categoría</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($libros as $libro) { ?>
                     <tr>
-                        <th>#</th>
-                        <th>Portada</th>
-                        <th>Título</th>
-                        <th>Autor</th>
-                        <th>Descripción</th>
-                        <th>Categoría</th>
-                        <th>Acción</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($libros as $libro) { ?>
-                        <tr>
-                            <td>1</td>
-                            <td>
-                                <img width="100" src="archivos/cover/<?= $libro->portada ?>">
-                            </td>
-                            <td>
-                                <?= htmlspecialchars($libro->titulo) ?>
-                            </td>
-                            <td>
-                                <?php
-                                    $autorNombre = "Undefined";
-                                    foreach ($autores as $autor) {
-                                     if ($autor->id == $libro->autor_id) {
+                        <td><?= $libro->id ?></td> <!-- Esto fue modificado para que se visualice mejor el ID de los libros -->
+                        <td>
+                            <img width="100" src="archivos/cover/<?= $libro->portada ?>">
+                        </td>
+                        <td>
+                            <?= htmlspecialchars($libro->titulo) ?>
+                        </td>
+                        <td>
+                            <?php
+                            $autorNombre = "Undefined";
+                            foreach ($autores as $autor) {
+                                if ($autor->id == $libro->autor_id) {
                                     $autorNombre = htmlspecialchars($autor->nombre . ' ' . $autor->apellido);
-                                     break;
-                                    }
-                                        }
-                                    echo $autorNombre;
-                                 ?>
-                            </td>
-                            <td><?= htmlspecialchars($libro->descripcion) ?></td>
-                            <td>
-                                <?php
-                                $categoriaNombre = "Undefined";
-                                foreach ($categorias as $categoria) {
-                                    if ($categoria->id == $libro->categoria_id) {
-                                        $categoriaNombre = htmlspecialchars($categoria->nombre);
-                                        break;
-                                    }
+                                    break;
                                 }
-                                echo $categoriaNombre;
-                                ?>
-                            </td>
-                            <td>
-                                <div class="btn-group">
-                                    <a href="#" class="btn btn-warning" style="margin-right: 5px;">Editar</a>
-                                    <a href="#" class="btn btn-danger">Eliminar</a>
-                                </div>
-                            </td>
-                        </tr>
-                    <?php } ?>
-                </tbody>
-            </table>
+                            }
+                            echo $autorNombre;
+                            ?>
+                        </td>
+                        <td><?= htmlspecialchars($libro->descripcion) ?></td>
+                        <td>
+                            <?php
+                            $categoriaNombre = "Undefined";
+                            foreach ($categorias as $categoria) {
+                                if ($categoria->id == $libro->categoria_id) {
+                                    $categoriaNombre = htmlspecialchars($categoria->nombre);
+                                    break;
+                                }
+                            }
+                            echo $categoriaNombre;
+                            ?>
+                        </td>
+                        <td>
+                            <div class="btn-group">
+                                <a href="#" class="btn btn-warning" style="margin-right: 5px;">Editar</a>
+                                <a href="#" class="btn btn-danger">Eliminar</a>
+                            </div>
+                        </td>
+                    </tr>
+                <?php } ?>
+            </tbody>
+        </table>
 
         <!-- Tabla para mostrar las categorías -->
 
@@ -145,7 +145,8 @@ $categorias = get_all_categories($conn);
                         <td><?= $categoria->id ?></td>
                         <td><?= htmlspecialchars($categoria->nombre) ?></td>
                         <td>
-                            <a href="editar-categoria.php?id=<?= $categoria->id ?>" class="btn btn-warning">Editar</a>           <a href="eliminar-categoria.php?id=<?= $categoria->id ?>" class="btn btn-danger">Eliminar</a>
+                            <a href="editar-categoria.php?id=<?= $categoria->id ?>" class="btn btn-warning">Editar</a>
+                            <a href="eliminar-categoria.php?id=<?= $categoria->id ?>" class="btn btn-danger">Eliminar</a>
                         </td>
                     </tr>
                 <?php } ?>
@@ -177,5 +178,7 @@ $categorias = get_all_categories($conn);
             </tbody>
         </table>
     </div>
+     <!-- Incluye el archivo JavaScript de Bootstrap 5 al final del body para mejorar el rendimiento -->
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 </html>

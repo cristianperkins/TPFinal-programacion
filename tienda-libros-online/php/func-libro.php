@@ -9,8 +9,8 @@ class Libro {
 }
 
 function get_all_books($con) {
-    $sql = "SELECT * FROM libros ORDER BY id DESC";
-
+    $order = 'ASC'; // Esto tuve que modificar para poder tener un orden ascendente en los libros cargados
+    $sql = "SELECT * FROM libros ORDER BY id $order";
     $stmt = $con->prepare($sql);
     $stmt->execute();
 

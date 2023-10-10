@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-10-2023 a las 03:57:47
+-- Tiempo de generación: 10-10-2023 a las 22:36:53
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -61,7 +61,8 @@ INSERT INTO `autor` (`id`, `nombre`, `apellido`) VALUES
 (1, 'Stephen', 'King'),
 (2, 'Edgar Allan', 'Poe'),
 (3, 'Lewis', 'Carroll'),
-(4, 'Howard Phillips', 'Lovecraft');
+(4, 'Howard Phillips', 'Lovecraft'),
+(5, 'Dante', 'Alighieri');
 
 -- --------------------------------------------------------
 
@@ -103,8 +104,11 @@ CREATE TABLE `libros` (
 --
 
 INSERT INTO `libros` (`id`, `titulo`, `autor_id`, `descripcion`, `categoria_id`, `portada`) VALUES
-(4, 'Carrie', 1, 'Carrie White, una tímida adolescente críada por una fanática religosa es humillada constantemente por su compañeros de instituto. Sin embargo, Carrie no es una chica cualquiera, la joven posee poderes psíquicos que se manifiestan cuando se siente dominada por la ira. El día del baile de graduación la situación llega a hacérsele insoportable.\r\n', 2, '6524ae5f6ae925.14558092.jpg'),
-(5, 'Las aventuras de Alicia en el país de las maravillas', 3, 'La historia cuenta cómo una niña llamada Alicia cae por un agujero, encontrándose en un mundo peculiar y extraño, poblado por humanos y criaturas antropomórficas. El libro juega con la lógica, dando a la novela gran popularidad tanto en niños como en adultos.', 1, '6524ae6edb3410.74253652.jpeg');
+(1, 'Carrie', 1, 'Carrie White, una tímida adolescente críada por una fanática religosa es humillada constantemente por su compañeros de instituto. Sin embargo, Carrie no es una chica cualquiera, la joven posee poderes psíquicos que se manifiestan cuando se siente dominada por la ira. El día del baile de graduación la situación llega a hacérsele insoportable.', 2, '6524d7c2b56245.33773446.jpeg'),
+(2, 'Las aventuras de Alicia en el país de las maravillas', 3, 'La historia cuenta cómo una niña llamada Alicia cae por un agujero, encontrándose en un mundo peculiar y extraño, poblado por humanos y criaturas antropomórficas. El libro juega con la lógica, dando a la novela gran popularidad tanto en niños como en adultos.', 1, '6524d7d3e15f11.29693358.jpeg'),
+(3, 'Los mitos de Cthulhu', 4, 'Los Mitos de Cthulhu, ciclo de narraciones de horror cósmico, a medio camino entre lo mítico, lo literario y lo religioso, la imaginería desatada y desasosegante de Lovecraft son pródigos en criaturas primigenias que aguardan el momento propicio para darse a conocer.', 2, '652553396a6907.13151360.jpeg'),
+(4, 'El resplandor', 1, 'Jack Torrance acepta una oferta de trabajo en un hotel de montaña que se encuentra a 65 kilómetros del pueblo más cercano. Además, las carreteras se encuentran cerradas al tráfico por las fuertes nevadas del invierno. Pronto comenzarán a manifestarse espíritus y apariciones extrañas.', 2, '6525535bd2de08.63940060.jpg'),
+(5, 'La Divina Comedia', 5, 'La Divina Comedia sigue el camino desde el centro de la Tierra, donde se halla Lucifer, hasta el dominio de Dios. El tema de la obra es el recorrido del poeta a través del más allá. En su obra se encuentra gran capacidad para describir el infierno, los círculos, los sufrimientos y los pecadores.', 3, '652553b85e8444.53195231.jpeg');
 
 --
 -- Índices para tablas volcadas
@@ -148,7 +152,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT de la tabla `autor`
 --
 ALTER TABLE `autor`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `categorias`
