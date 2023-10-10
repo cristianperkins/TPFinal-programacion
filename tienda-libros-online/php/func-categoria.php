@@ -1,27 +1,23 @@
 <?php
-
-// Definición de la clase Categoria para representar objetos de categoría
-
+// Creamos la clase Categoria
 class Categoria {
-    public $id;    
-    public $nombre; 
+    public $id;
+    public $nombre;
 
     // Constructor de la clase Categoria
-
     public function __construct($id, $nombre) {
-        $this->id = $id;         
-        $this->nombre = $nombre; 
+        $this->id = $id; // Asigna el ID proporcionado al objeto
+        $this->nombre = $nombre; // Asigna el nombre proporcionado al objeto
     }
 }
 
 // Función para obtener todas las categorías de la base de datos
+function get_all_categories($con) {
+    $sql  = "SELECT * FROM categorias"; // Consulta SQL para seleccionar todas las categorías
+    $stmt = $con->prepare($sql); // Preparamos la consulta
+    $stmt->execute(); // Ejecutamos la consulta
 
-function get_all_categories($con){
-    $sql = "SELECT * FROM categorias";  
-    $stmt = $con->prepare($sql);        
-    $stmt->execute();                   
-
-    $categorias = array();  // Iniciamos un arreglo vacío para almacenar objetos de categoría
+    $categorias = array(); // Creamos un arreglo vacío para almacenar objetos de categoría
 
     if ($stmt->rowCount() > 0) {
         // Si se encontraron resultados en la consulta
@@ -30,10 +26,8 @@ function get_all_categories($con){
             $categoria = new Categoria($row['id'], $row['nombre']);
             $categorias[] = $categoria; // Agrega el objeto Categoria al arreglo de categorías
         }
-    } else {
-        $categorias = 0; // Si no se encontraron categorías, se asigna 0
     }
-    return $categorias; // Devuelve el arreglo de objetos de categoría
-}
 
+    return $categorias; // Devolvemos el arreglo de objetos de categoría
+}
 ?>

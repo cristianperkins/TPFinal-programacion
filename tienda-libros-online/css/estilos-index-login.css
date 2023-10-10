@@ -1,47 +1,46 @@
-/* Estilos para el botón "Tienda" en index.php y login.php */
-.btn-store {
-    background-color: #FF5733; /* Color de fondo del botón */
-    color: #fff; /* Color del texto del botón */
-    transition: background-color 0.3s, color 0.3s; /* Transiciones suaves */
-}
-
-.btn-store:hover {
-    background-color: #FF4500; /* Cambia el color de fondo al pasar el ratón */
-    color: #fff; /* Cambia el color del texto al pasar el ratón */
-}
-
-/* Estilos para la barra de navegación */
-.navbar {
-    background-color: #fff; /* Fondo blanco */
-    border-bottom: 1px solid #e5e5e5; /* Borde inferior suave */
-}
-
-.navbar-nav .nav-link {
+/* Estilo para el menú de navegación en index-login.css */
+.navbar-light .navbar-nav .nav-link {
+    font-size: 20px; /* Tamaño de fuente más grande */
     color: #333; /* Color de texto predeterminado */
-    transition: color 0.3s; /* Transición suave */
+    font-family: "Arial, Helvetica, sans-serif"; /* Tipografía predeterminada */
+    text-transform: uppercase; /* Convierte el texto a mayúsculas */
+    transition: color 0.3s ease-in-out, text-shadow 0.3s ease-in-out; /* Transición suave */
 }
 
-.navbar-nav .nav-link:hover {
-    color: #FF5733; /* Cambia el color al pasar el ratón */
-    transition: color 0.3s; /* Transición suave */
+/* Efecto de transición de color en los enlaces del menú de navegación en index-login.css */
+.navbar-light .navbar-nav .nav-link:hover {
+    color: #007BFF; /* Cambia el color del texto al pasar el cursor sobre él */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Agrega sombra al texto */
+    transition: color 0.3s ease-in-out, text-shadow 0.3s ease-in-out; /* Transición suave */
 }
 
-/* Efecto tipo libro al pasar de una opción a otra en la barra de navegación */
-.navbar-nav .nav-item {
-    position: relative;
+/* Estilos para los botones en index-login.css */
+.custom-btn {
+    border-radius: 5px; /* Agrega bordes redondeados a los botones */
 }
 
-.navbar-nav .nav-item::before {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background-color: #FF5733; /* Color de la línea a tu elección */
-    transition: width 0.3s; /* Agrega una transición suave */
+.btn-warning {
+    background-color: #ffc107; /* Cambia el color de fondo de los botones de advertencia (Editar) */
+    border-color: #ffc107; /* Cambia el color del borde de los botones de advertencia */
+    color: #343a40; /* Cambia el color del texto de los botones de advertencia */
 }
 
-.navbar-nav .nav-item:hover::before {
-    width: 100%;
+.btn-warning:hover {
+    background-color: #ffca2b; /* Cambia el color de fondo de los botones de advertencia al pasar el ratón por encima */
+    border-color: #ffca2b; /* Cambia el color del borde de los botones de advertencia al pasar el ratón por encima */
+    color: #343a40; /* Cambia el color del texto al pasar el cursor sobre el botón */
+    text-shadow: none; /* Elimina la sombra al pasar el cursor sobre el botón */
+}
+
+.btn-danger {
+    background-color: #dc3545; /* Cambia el color de fondo de los botones peligrosos (Eliminar) */
+    border-color: #dc3545; /* Cambia el color del borde de los botones peligrosos */
+    color: #ffffff; /* Cambia el color del texto de los botones peligrosos */
+}
+
+.btn-danger:hover {
+    background-color: #e94b5b; /* Cambia el color de fondo de los botones peligrosos al pasar el ratón por encima */
+    border-color: #e94b5b; /* Cambia el color del borde de los botones peligrosos al pasar el ratón por encima */
+    color: #ffffff; /* Cambia el color del texto al pasar el cursor sobre el botón */
+    text-shadow: none; /* Elimina la sombra al pasar el cursor sobre el botón */
 }

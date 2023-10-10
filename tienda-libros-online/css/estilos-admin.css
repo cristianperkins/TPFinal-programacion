@@ -1,12 +1,17 @@
 /* Estilo para el menú de navegación */
 .navbar-light .navbar-nav .nav-link {
-    color: #333; /* Cambiar el color del texto cuando se pasa el cursor sobre él */
+    font-size: 20px; /* Tamaño de fuente más grande */
+    color: #333; /* Color de texto predeterminado */
+    font-family: "Arial, Helvetica, sans-serif"; /* Tipografía predeterminada */
+    text-transform: uppercase; /* Convierte el texto a mayúsculas */
+    transition: color 0.3s ease-in-out, text-shadow 0.3s ease-in-out; /* Transición suave */
 }
 
 /* Efecto de transición de color en los enlaces del menú de navegación */
 .navbar-light .navbar-nav .nav-link:hover {
-    color: #007BFF; /* Cambiar el color del texto al pasar el cursor sobre él */
-    transition: color 0.3s ease-in-out; /* Agregar una transición suave */
+    color: #007BFF; /* Cambia el color del texto al pasar el cursor sobre él */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Agrega sombra al texto */
+    transition: color 0.3s ease-in-out, text-shadow 0.3s ease-in-out; /* Transición suave */
 }
 
 /* Estilos para los botones */
@@ -23,6 +28,8 @@
 .btn-warning:hover {
     background-color: #ffca2b; /* Cambia el color de fondo de los botones de advertencia al pasar el ratón por encima */
     border-color: #ffca2b; /* Cambia el color del borde de los botones de advertencia al pasar el ratón por encima */
+    color: #343a40; /* Cambia el color del texto al pasar el cursor sobre el botón */
+    text-shadow: none; /* Elimina la sombra al pasar el cursor sobre el botón */
 }
 
 .btn-danger {
@@ -34,11 +41,13 @@
 .btn-danger:hover {
     background-color: #e94b5b; /* Cambia el color de fondo de los botones peligrosos al pasar el ratón por encima */
     border-color: #e94b5b; /* Cambia el color del borde de los botones peligrosos al pasar el ratón por encima */
+    color: #ffffff; /* Cambia el color del texto al pasar el cursor sobre el botón */
+    text-shadow: none; /* Elimina la sombra al pasar el cursor sobre el botón */
 }
 
 /* Estilos para las tablas */
 .table {
-    font-size: 16px; /* Cambia el tamaño de fuente de las tablas */
+    font-size: 18px; /* Cambia el tamaño de fuente de las tablas */
     background-color: #ffffff; /* Cambia el color de fondo de las tablas */
 }
 
@@ -59,4 +68,33 @@
 .custom-dropdown .dropdown-item:hover {
     background-color: #343a40; /* Cambia el color de fondo de los elementos del menú desplegable al pasar el ratón por encima */
     color: #ffffff; /* Cambia el color del texto de los elementos del menú desplegable al pasar el ratón por encima */
+    text-shadow: none; /* Elimina la sombra al pasar el cursor sobre el elemento del menú */
+}
+
+/* Estilo para el botón de carga personalizado */
+.custom-file-upload {
+    background-color: #007bff;
+    color: white;
+    border: 1px solid #007bff;
+    display: inline-block;
+    padding: 4px 8px; /* Ajusta el padding para reducir el tamaño del botón */
+    cursor: pointer;
+    border-radius: 4px;
+    margin-top: 10px; /* Agrega margen en la parte superior */
+    font-size: 16px; /* Tamaño de fuente */
+    font-family: "Arial, Helvetica, sans-serif"; /* Tipografía personalizada */
+    text-transform: uppercase; /* Convierte el texto a mayúsculas */
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, text-shadow 0.3s ease-in-out; /* Transición suave */
+}
+
+/* Cambia el cursor a puntero cuando se pasa el mouse sobre el botón de carga */
+.custom-file-upload:hover {
+    background-color: #0056b3; /* Cambia el color de fondo al pasar el ratón por encima */
+    color: white; /* Cambia el color del texto al pasar el ratón por encima */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Agrega sombra al texto al pasar el ratón por encima */
+}
+
+/* Añade margen inferior al label "Selección de portada" */
+.form-label[for="inputPortada"] {
+    margin-bottom: 10px;
 }
