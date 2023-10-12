@@ -8,8 +8,7 @@ class Libro {
     public $portada;
 }
 
-function get_all_books($con) {
-    $order = 'ASC'; // Esto tuve que modificar para poder tener un orden ascendente en los libros cargados
+function get_all_books($con, $order = 'ASC') {
     $sql = "SELECT * FROM libros ORDER BY id $order";
     $stmt = $con->prepare($sql);
     $stmt->execute();
@@ -28,6 +27,14 @@ function get_all_books($con) {
     }
 
     return $libros;
+}
+
+function get_book($con, $id) {
+    $sql = "SELECT * FROM libros WHERE id = ?";
+    $stmt = $con->prepare($sql);
+    $stmt->bindParam(1, $id, PDO::PARAM_INT);
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
 // Función para agregar un libro

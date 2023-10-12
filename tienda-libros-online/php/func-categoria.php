@@ -30,4 +30,20 @@ function get_all_categories($con) {
 
     return $categorias; // Devolvemos el arreglo de objetos de categoría
 }
+
+// Función para obtener una categoría por su ID
+function get_category($con, $id) {
+    $sql  = "SELECT * FROM categorias WHERE id = ?";
+    $stmt = $con->prepare($sql);
+    $stmt->execute([$id]);
+
+    if ($stmt->rowCount() > 0) {
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        // Crea un nuevo objeto Categoria con los datos del resultado
+        $categoria = new Categoria($row['id'], $row['nombre']);
+        return $categoria;
+    } else {
+        return null; // No se encontró una categoría con el ID especificado
+    }
+}
 ?>

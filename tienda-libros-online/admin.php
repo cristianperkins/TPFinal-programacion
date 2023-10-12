@@ -16,7 +16,7 @@ $libros = get_all_books($conn, 'ASC');
 
 # Incluir la función de los autores
 include "php/func-autor.php";
-$autores = get_all_author($conn); // Cambio en el nombre de la función
+$autores = get_all_authors($conn); // Cambio en el nombre de la función
 
 # Incluir la función de las categorías
 include "php/func-categoria.php";
@@ -50,7 +50,7 @@ $categorias = get_all_categories($conn);
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="index.php">Tienda</a>
                         </li>
-                        <li class="nav-item">
+                        <li class "nav-item">
                             <a class="nav-link" href="anadir-libro.php">Añadir Libro</a>
                         </li>
                         <li class="nav-item">
@@ -119,7 +119,8 @@ $categorias = get_all_categories($conn);
                         </td>
                         <td>
                             <div class="btn-group">
-                                <a href="#" class="btn btn-warning" style="margin-right: 5px;">Editar</a>
+                            <a href="editar-libro.php?id=<?= $libro->id ?>" class="btn btn-warning" style="margin-right: 5px;">Editar</a>
+
                                 <a href="#" class="btn btn-danger">Eliminar</a>
                             </div>
                         </td>
@@ -170,7 +171,7 @@ $categorias = get_all_categories($conn);
                         <td><?= $autor->id ?></td>
                         <td><?= htmlspecialchars($autor->nombre . ' ' . $autor->apellido) ?></td>
                         <td>
-                            <a href="editar-autor.php?id=<?= $autor->id ?>" class="btn btn-warning">Editar</a>
+                            <a href="editar-autor.php?id=<?=$autor->id ?>" class="btn btn-warning">Editar</a>
                             <a href="eliminar-autor.php?id=<?= $autor->id ?>" class="btn btn-danger">Eliminar</a>
                         </td>
                     </tr>
@@ -178,7 +179,8 @@ $categorias = get_all_categories($conn);
             </tbody>
         </table>
     </div>
-     <!-- Incluye el archivo JavaScript de Bootstrap 5 al final del body para mejorar el rendimiento -->
-     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+    <!-- Incluye el archivo JavaScript de Bootstrap 5 al final del body para mejorar el rendimiento -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -25,9 +25,7 @@ class GestorAutor {
             $mensaje_error = "Tanto el nombre como el apellido del autor son requeridos";
         } elseif (empty($nombre_autor)) {
             $mensaje_error = "El nombre del autor es requerido";
-        } elseif (empty($apellido_autor)) {
-            $mensaje_error = "El apellido del autor es requerido";
-        } else {
+        }else {
             $sql  = "INSERT INTO autor (nombre, apellido) VALUES (?, ?)";
             $stmt = $this->conn->prepare($sql);
             $resultado  = $stmt->execute([$nombre_autor, $apellido_autor]);
@@ -41,7 +39,7 @@ class GestorAutor {
             }
         }
 
-        // Redirige de nuevo a la página con los mensajes
+        // Redirimos de nuevo a la página con los mensajes
         if (isset($mensaje_error)) {
             header("Location: ../anadir-autor.php?error=$mensaje_error");
         } elseif (isset($mensaje_exito)) {
@@ -56,14 +54,14 @@ class GestorAutor {
     }
 }
 
-// Verificar autenticación
+// Verificamos autenticación
 $gestorAutor = new GestorAutor($conn);
 
 if (!$gestorAutor->estaAutenticado()) {
     $gestorAutor->redirigirALogin();
 }
 
-// Procesar el formulario para agregar un autor
+// Procesamos el formulario para agregar un autor
 if (isset($_POST['nombre_autor']) && isset($_POST['apellido_autor'])) {
     $nombre_autor = $_POST['nombre_autor'];
     $apellido_autor = $_POST['apellido_autor'];

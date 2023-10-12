@@ -1,5 +1,5 @@
 <?php
-//Creamos la clase Autor
+// Creamos la clase Autor
 class Autor {
     public $id;
     public $nombre;
@@ -14,7 +14,7 @@ class Autor {
 }
 
 // Función para obtener todos los autores de la base de datos
-function get_all_author($con) {
+function get_all_authors($con) {
     $sql  = "SELECT * FROM autor"; // Consulta SQL para seleccionar todos los autores
     $stmt = $con->prepare($sql); // Preparamos la consulta
     $stmt->execute(); // Ejecutamos la consulta
@@ -31,5 +31,21 @@ function get_all_author($con) {
     }
 
     return $autores; // Devolvemos el arreglo de objetos de autor
+}
+
+// Función para obtener un autor por su ID
+function get_author($con, $id) {
+    $sql  = "SELECT * FROM autor WHERE id = ?";
+    $stmt = $con->prepare($sql);
+    $stmt->execute([$id]);
+
+    if ($stmt->rowCount() > 0) {
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        // Crea un nuevo objeto Autor con los datos del resultado
+        $autor = new Autor($row['id'], $row['nombre'], $row['apellido']);
+        return $autor;
+    } else {
+        return null; // No se encontró un autor con el ID especificado
+    }
 }
 ?>

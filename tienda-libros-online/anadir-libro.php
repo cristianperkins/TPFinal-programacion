@@ -12,7 +12,7 @@ include "php/func-autor.php";
 include "php/func-subir-archivo.php"; // Sin este archivo no sube nada
 
 $categorias = get_all_categories($conn);
-$autores = get_all_author($conn);
+$autores = get_all_authors($conn);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $titulo_libro = $_POST['book_title'];
