@@ -66,11 +66,14 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_email'])) {
             <?=htmlspecialchars($_GET['success']); ?>
         </div>
     <?php } ?>
-    <div class="mb-3">
-        <label class="form-label">Nombre de la categoría</label>
-        <input type="text" class="form-control" name="nombre_categoria">
-    </div>
-    <button type="submit" class="btn btn-primary">Añadir Categoría</button>
+        <div class="mb-3">
+            <label class="form-label">Nombre de la categoría</label>
+            <input type="text" class="form-control" name="nombre_categoria">
+         </div>
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Añadir Categoría</button>
+            <button type="reset" class="btn btn-secondary">Limpiar</button>
+        </div>
 </form>
 </div>
 </body>

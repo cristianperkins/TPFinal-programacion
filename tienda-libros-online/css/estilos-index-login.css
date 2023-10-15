@@ -1,46 +1,110 @@
-/* Estilo para el menú de navegación en index-login.css */
+/* Estilo para la barra de navegación en estilos-index-login.css */
 .navbar-light .navbar-nav .nav-link {
-    font-size: 20px; /* Tamaño de fuente más grande */
+    font-size: 18px; /* Tamaño de fuente ligeramente más grande */
     color: #333; /* Color de texto predeterminado */
     font-family: "Arial, Helvetica, sans-serif"; /* Tipografía predeterminada */
     text-transform: uppercase; /* Convierte el texto a mayúsculas */
     transition: color 0.3s ease-in-out, text-shadow 0.3s ease-in-out; /* Transición suave */
 }
 
-/* Efecto de transición de color en los enlaces del menú de navegación en index-login.css */
+/* Efecto de transición de color en los enlaces del menú de navegación en estilos-index-login.css */
 .navbar-light .navbar-nav .nav-link:hover {
     color: #007BFF; /* Cambia el color del texto al pasar el cursor sobre él */
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Agrega sombra al texto */
     transition: color 0.3s ease-in-out, text-shadow 0.3s ease-in-out; /* Transición suave */
 }
 
-/* Estilos para los botones en index-login.css */
-.custom-btn {
-    border-radius: 5px; /* Agrega bordes redondeados a los botones */
+/* Estilo para las celdas de libros */
+.card {
+    width: 300px; /* Ancho fijo para todas las celdas */
+    height: 450px; /* Alto fijo para todas las celdas */
+    border: 1px solid #ddd;
+    box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.2);
+    display: flex; /* Activa la disposición flexible */
+    flex-direction: column; /* Apila los elementos verticalmente */
+    justify-content: space-between; /* Centra verticalmente los elementos */
+    text-align: center; /* Centra el texto */
+    padding: 10px; /* Espaciado interno para el contenido de la celda */
 }
 
+/* Estilo para la imagen de las tarjetas de libros */
+.card img {
+    max-width: 100%; /* Ancho máximo del 100% para ajustar la imagen a la celda */
+    max-height: 60%; /* Alto máximo del 60% para ajustar la imagen a la celda */
+    object-fit: contain; /* Ajustar la imagen para que quepa sin recortar */
+    margin: 0 auto; /* Centrar la imagen horizontalmente */
+}
+
+/* Estilo para el contenido de la celda (nombre del autor, categoría, descripción) */
+.card-content {
+    text-align: center; /* Centra el texto */
+    flex-grow: 1; /* Hace que el contenido ocupe el espacio disponible */
+    display: flex; /* Activa la disposición flexible para el contenido */
+    flex-direction: column; /* Apila los elementos verticalmente */
+    justify-content: space-between; /* Centra verticalmente el contenido */
+}
+
+/* Estilo para el título del libro */
+.card-title {
+    font-size: 16px; /* Tamaño de fuente para el título */
+    font-weight: bold; /* Texto en negrita */
+    margin: 5px 0; /* Espaciado del título */
+}
+
+/* Estilo para la categoría del libro */
+.card-category {
+    font-size: 14px; /* Tamaño de fuente para la categoría */
+    color: #888; /* Color de texto gris */
+    margin: 5px 0; /* Espaciado de la categoría */
+}
+
+/* Estilo para la descripción del libro */
+.card-description {
+    font-size: 12px; /* Tamaño de fuente para la descripción */
+    overflow: hidden; /* Oculta el texto que excede */
+    text-overflow: ellipsis; /* Muestra puntos suspensivos (...) para el texto excedido */
+    white-space: nowrap; /* Evita el desbordamiento de texto */
+}
+
+/* Estilo para el botón Comprar */
 .btn-warning {
-    background-color: #ffc107; /* Cambia el color de fondo de los botones de advertencia (Editar) */
-    border-color: #ffc107; /* Cambia el color del borde de los botones de advertencia */
-    color: #343a40; /* Cambia el color del texto de los botones de advertencia */
+    margin: 10px auto; /* Centrar el botón horizontalmente y agregar espacio arriba y abajo */
 }
 
-.btn-warning:hover {
-    background-color: #ffca2b; /* Cambia el color de fondo de los botones de advertencia al pasar el ratón por encima */
-    border-color: #ffca2b; /* Cambia el color del borde de los botones de advertencia al pasar el ratón por encima */
-    color: #343a40; /* Cambia el color del texto al pasar el cursor sobre el botón */
-    text-shadow: none; /* Elimina la sombra al pasar el cursor sobre el botón */
+/* Estilo para el formulario de búsqueda */
+.input-group {
+    margin: 20px 0;
 }
 
-.btn-danger {
-    background-color: #dc3545; /* Cambia el color de fondo de los botones peligrosos (Eliminar) */
-    border-color: #dc3545; /* Cambia el color del borde de los botones peligrosos */
-    color: #ffffff; /* Cambia el color del texto de los botones peligrosos */
+.form-control {
+    border: none;
+    border-radius: 0;
+    border-bottom: 2px solid #007BFF;
+    font-weight: 600;
 }
 
-.btn-danger:hover {
-    background-color: #e94b5b; /* Cambia el color de fondo de los botones peligrosos al pasar el ratón por encima */
-    border-color: #e94b5b; /* Cambia el color del borde de los botones peligrosos al pasar el ratón por encima */
-    color: #ffffff; /* Cambia el color del texto al pasar el cursor sobre el botón */
-    text-shadow: none; /* Elimina la sombra al pasar el cursor sobre el botón */
+.btn-primary {
+    background-color: #007BFF;
+    border: none;
+    border-radius: 0;
+    font-weight: 600;
+}
+
+/* Estilo para las barras laterales */
+.list-group-item {
+    background-color: #007BFF;
+    color: #fff;
+    font-weight: 600;
+    border: none;
+    border-radius: 0;
+    transition: background-color 0.3s;
+}
+
+.list-group-item a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.list-group-item:hover {
+    background-color: #0056b3;
 }

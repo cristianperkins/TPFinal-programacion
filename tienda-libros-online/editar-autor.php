@@ -62,7 +62,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_email'])) {
                             <a class="nav-link" href="anadir-categoria.php">Añadir Categoría</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="anadir-autor.php">Añadir Autor</a>
+                            <a class="nav-link disabled" href="anadir-autor.php">Añadir Autor</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="logout.php">Cerrar Sesión</a>
@@ -87,14 +87,15 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_email'])) {
             <?php } ?>
             <div class="mb-3">
                 <label class="form-label">Nombre del autor</label>
-                <input type="text" class="form-control" name="nombre_autor" value="<?= htmlspecialchars($autor->nombre) ?>">
+                <input type="text" class="form-control" name="nombre_autor" value="">
                 <input type="hidden" name="autor_id" value="<?= $autor->id ?>">
             </div>
             <div class="mb-3">
                 <label class="form-label">Apellido del autor</label>
-                <input type="text" class="form-control" name="apellido_autor" value="<?= htmlspecialchars($autor->apellido) ?>">
+                <input type="text" class="form-control" name="apellido_autor" value="">
             </div>
-            <button type="submit" class="btn btn-primary">Actualizar Autor</button>
+                <button type="submit" class="btn btn-primary">Actualizar Autor</button>
+                <button type="reset" class="btn btn-secondary">Limpiar</button>
         </form>
     </div>
 </body>

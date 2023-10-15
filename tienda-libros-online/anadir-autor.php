@@ -24,7 +24,6 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_email'])) {
 <body>
     <div class="container">
         <!-- Barra de navegación del admin -->
-
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
                 <a class="navbar-brand" href="admin.php">Admin</a>
@@ -53,26 +52,28 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_email'])) {
             </div>
         </nav>
         <form action="php/func-anadir-autor.php" method="post" class="shadow p-4 rounded mt-5" style="width: 90%; max-width: 50rem;">
-    <h1 class="text-center pb-5 display-4 fs-3">
-        Añadir Autores
-    </h1>
-    <?php if (isset($_GET['error'])) { ?>
-        <div class="alert alert-danger" role="alert">
-            <?=htmlspecialchars($_GET['error']); ?>
-        </div>
-    <?php } ?>
-    <?php if (isset($_GET['success'])) { ?>
-        <div class="alert alert-success" role="alert">
-            <?=htmlspecialchars($_GET['success']); ?>
-        </div>
-    <?php } ?>
-    <div class="mb-3">
-        <label class="form-label">Nombre del autor</label>
-        <input type="text" class="form-control" name="nombre_autor">
+            <h1 class="text-center pb-5 display-4 fs-3">Añadir Autores</h1>
+            <?php if (isset($_GET['error'])) { ?>
+                <div class="alert alert-danger" role="alert">
+                    <?=htmlspecialchars($_GET['error']); ?>
+                </div>
+            <?php } ?>
+            <?php if (isset($_GET['success'])) { ?>
+                <div class="alert alert-success" role="alert">
+                    <?=htmlspecialchars($_GET['success']); ?>
+                </div>
+            <?php } ?>
+            <div class="mb-3">
+                <label class="form-label">Nombre del autor</label>
+                <input type="text" class="form-control" name="nombre_autor">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Apellido del autor</label>
+                <input type="text" class="form-control" name="apellido_autor">
+            </div>
+            <button type="submit" class="btn btn-primary">Añadir Autor</button>
+            <button type="reset" class="btn btn-secondary">Limpiar</button>
+        </form>
     </div>
-    <div class="mb-3">
-        <label class="form-label">Apellido del autor</label>
-        <input type="text" class="form-control" name="apellido_autor">
-    </div>
-    <button type="submit" class="btn btn-primary">Añadir Autor</button>
-</form>
+</body>
+</html>

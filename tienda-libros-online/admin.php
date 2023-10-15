@@ -83,49 +83,49 @@ $categorias = get_all_categories($conn);
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($libros as $libro) { ?>
-                    <tr>
-                        <td><?= $libro->id ?></td> <!-- Esto fue modificado para que se visualice mejor el ID de los libros -->
-                        <td>
-                            <img width="100" src="archivos/cover/<?= $libro->portada ?>">
-                        </td>
-                        <td>
-                            <?= htmlspecialchars($libro->titulo) ?>
-                        </td>
-                        <td>
-                            <?php
-                            $autorNombre = "Undefined";
-                            foreach ($autores as $autor) {
-                                if ($autor->id == $libro->autor_id) {
-                                    $autorNombre = htmlspecialchars($autor->nombre . ' ' . $autor->apellido);
-                                    break;
-                                }
-                            }
-                            echo $autorNombre;
-                            ?>
-                        </td>
-                        <td><?= htmlspecialchars($libro->descripcion) ?></td>
-                        <td>
-                            <?php
-                            $categoriaNombre = "Undefined";
-                            foreach ($categorias as $categoria) {
-                                if ($categoria->id == $libro->categoria_id) {
-                                    $categoriaNombre = htmlspecialchars($categoria->nombre);
-                                    break;
-                                }
-                            }
-                            echo $categoriaNombre;
-                            ?>
-                        </td>
-                        <td>
-                            <div class="btn-group">
-                            <a href="editar-libro.php?id=<?= $libro->id ?>" class="btn btn-warning" style="margin-right: 5px;">Editar</a>
-
-                                <a href="#" class="btn btn-danger">Eliminar</a>
-                            </div>
-                        </td>
-                    </tr>
-                <?php } ?>
+    <?php foreach ($libros as $libro) { ?>
+        <tr>
+            <td><?= $libro->id ?></td>
+            <td>
+                <img width="100" src="archivos/cover/<?= $libro->portada ?>">
+            </td>
+            <td><?= htmlspecialchars($libro->titulo) ?></td>
+            <td>
+                <?php
+                $autorNombre = " ";
+                foreach ($autores as $autor) {
+                    if ($autor->id == $libro->autor_id) {
+                        $autorNombre = htmlspecialchars($autor->nombre . ' ' . $autor->apellido);
+                        break;
+                    }
+                }
+                echo $autorNombre;
+                ?>
+            </td>
+            <td><?= htmlspecialchars($libro->descripcion) ?></td>
+            <td>
+                <?php
+                $categoriaNombre = " ";
+                foreach ($categorias as $categoria) {
+                    if ($categoria->id == $libro->categoria_id) {
+                        $categoriaNombre = htmlspecialchars($categoria->nombre);
+                        break;
+                    }
+                }
+                echo $categoriaNombre;
+                ?>
+            </td>
+            <td>
+                <div class="btn-group">
+                        <a href="editar-libro.php?id=<?= $libro->id ?>" class="btn btn-warning" style="margin-right: 5px;">Editar</a>
+                        <form action="php/func-eliminar-libro.php" method="post">
+                        <input type="hidden" name="libro_id" value="<?= $libro->id ?>">
+                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+    <?php } ?>
             </tbody>
         </table>
 
@@ -147,7 +147,7 @@ $categorias = get_all_categories($conn);
                         <td><?= htmlspecialchars($categoria->nombre) ?></td>
                         <td>
                             <a href="editar-categoria.php?id=<?= $categoria->id ?>" class="btn btn-warning">Editar</a>
-                            <a href="eliminar-categoria.php?id=<?= $categoria->id ?>" class="btn btn-danger">Eliminar</a>
+                            <a href="php/func-eliminar-categoria.php?id=<?= $categoria->id ?>" class="btn btn-danger">Eliminar</a>
                         </td>
                     </tr>
                 <?php } ?>
@@ -172,7 +172,7 @@ $categorias = get_all_categories($conn);
                         <td><?= htmlspecialchars($autor->nombre . ' ' . $autor->apellido) ?></td>
                         <td>
                             <a href="editar-autor.php?id=<?=$autor->id ?>" class="btn btn-warning">Editar</a>
-                            <a href="eliminar-autor.php?id=<?= $autor->id ?>" class="btn btn-danger">Eliminar</a>
+                            <a href="php/func-eliminar-autor.php?id=<?= $autor->id ?>" class="btn btn-danger">Eliminar</a>
                         </td>
                     </tr>
                 <?php } ?>

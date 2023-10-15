@@ -59,7 +59,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_email'])) {
                             <a class="nav-link" href="anadir-libro.php">Añadir Libro</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="anadir-categoria.php">Añadir Categoría</a>
+                            <a class="nav-link disabled" href="anadir-categoria.php">Añadir Categoría</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="anadir-autor.php">Añadir Autor</a>
@@ -87,10 +87,11 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_email'])) {
             <?php } ?>
             <div class="mb-3">
                 <label class="form-label">Nombre de la categoría</label>
-                <input type="text" class="form-control" name="nombre_categoria" value="<?= htmlspecialchars($categoria->nombre) ?>">
+                <input type="text" class="form-control" name="nombre_categoria" value="">
                 <input type="hidden" name="categoria_id" value="<?= $categoria->id ?>">
             </div>
-            <button type="submit" class="btn btn-primary">Actualizar Categoría</button>
+                <button type="submit" class="btn btn-primary">Actualizar Categoría</button>
+                <button type="reset" class="btn btn-secondary">Limpiar</button>
         </form>
     </div>
 </body>
