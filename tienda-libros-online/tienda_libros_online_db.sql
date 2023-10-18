@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-10-2023 a las 18:53:26
+-- Tiempo de generación: 18-10-2023 a las 19:49:41
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -125,6 +125,28 @@ INSERT INTO `libros` (`id`, `titulo`, `autor_id`, `descripcion`, `categoria_id`,
 (9, 'La Naranja Mécanica', 10, 'Alex es un joven muy agresivo que tiene dos pasiones: la violencia desaforada y Beethoven. Es el jefe de la banda de los drugos, que dan rienda suelta a sus instintos más salvajes aterrorizando a la población.', 3, 3550.00, 1962, '652ff256beec92.99290742.jpg'),
 (10, 'El Discurso del Método', 2, 'Esta obra marca el inicio de la filosofía moderna. Descartes cuestiona aquí que cualquier tipo de conocimiento pueda basarse en algo tan engañoso como los sentidos. Para buscar la verdad tenemos que poner en duda lo que sabemos.', 2, 3365.00, 1637, '652ff511cb9690.30404228.jpg');
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `usuarios`
+--
+
+CREATE TABLE `usuarios` (
+  `id` int(11) NOT NULL,
+  `nombre_usuario` varchar(255) NOT NULL,
+  `correo_electronico` varchar(255) NOT NULL,
+  `contrasena` varchar(255) NOT NULL,
+  `fecha_nacimiento` date NOT NULL,
+  `telefono` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `usuarios`
+--
+
+INSERT INTO `usuarios` (`id`, `nombre_usuario`, `correo_electronico`, `contrasena`, `fecha_nacimiento`, `telefono`) VALUES
+(3, 'Pepe', 'jose39@gmail.com', '$2y$10$zI4xzp3AEFNEKNtlNYgog.rjOvVmMBtHVEK2LNmO1yAc6oNMLtqbS', '1994-01-07', '3412568987');
+
 --
 -- Índices para tablas volcadas
 --
@@ -154,6 +176,12 @@ ALTER TABLE `libros`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
@@ -180,6 +208,12 @@ ALTER TABLE `categorias`
 --
 ALTER TABLE `libros`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT de la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

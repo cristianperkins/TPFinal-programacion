@@ -1,8 +1,8 @@
 <?php
-require('db_conexion.php'); // Incluimos el archivo de conexión a la base de datos
+require('db_conexion.php'); // Incluye el archivo de conexión a la base de datos
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Obtenemos acá  los datos del formulario
+    // Obten los datos del formulario
     $nombreUsuario = $_POST['username'];
     $correoElectronico = $_POST['email'];
     $contrasena = password_hash($_POST['password'], PASSWORD_BCRYPT); // Hash de la contraseña
@@ -14,12 +14,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = $conn->prepare("INSERT INTO usuarios (nombre_usuario, correo_electronico, contrasena, fecha_nacimiento, telefono) VALUES (?, ?, ?, ?, ?)");
         $stmt->execute([$nombreUsuario, $correoElectronico, $contrasena, $fechaNacimiento, $telefono]);
 
-        // JavaScript para mostrar un mensaje de alerta y redirigir a index.php
-        echo '<script>';
-        echo 'const mensajeRegistroExitoso = "Usuario registrado, bienvenido ' . $nombreUsuario . '";';
-        echo 'alert(mensajeRegistroExitoso);';
-        echo 'window.location.href = "index.php";'; // Redirige a index.php
-        echo '</script>';
+        // Redirige a una página de éxito o muestra un mensaje de registro exitoso
+        header('Location: registro_exitoso.php'); // Reemplaza con la URL adecuada
+        exit();
     } catch (PDOException $e) {
         echo "Error al registrar usuario: " . $e->getMessage();
     }

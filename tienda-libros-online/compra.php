@@ -32,6 +32,7 @@ $stmt = $conn->prepare($query);
 $stmt->bindParam(':book_id', $bookId, PDO::PARAM_INT);
 $stmt->execute();
 $libro_comprado = $stmt->fetch(PDO::FETCH_ASSOC);
+$_SESSION['precio'] = $libro_comprado['precio']; // Establece el precio en la sesión
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Procesa el formulario de compra aquí
@@ -150,7 +151,7 @@ if (empty($direccion)) {
         <p>Autor: <?= $libro_comprado['autor_nombre'] . ' ' . $libro_comprado['autor_apellido'] ?></p>
         <p>Categoría: <?= $libro_comprado['categoria_nombre'] ?></p>
         <p>Descripción: <?= $libro_comprado['descripcion'] ?></p>
-        <p>Precio: $<?= number_format($_SESSION['book_price'], 2) ?> pesos argentinos</p>
+        <p>Precio: $<?= number_format($_SESSION['precio'], 2) ?> pesos argentinos</p>
         <p>Año de Publicación: <?= $libro_comprado['fecha_publicacion'] ?></p>
     </div>
 
