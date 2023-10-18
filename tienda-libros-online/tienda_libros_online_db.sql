@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-10-2023 a las 17:18:01
+-- Tiempo de generación: 18-10-2023 a las 18:53:26
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -89,7 +89,8 @@ INSERT INTO `categorias` (`id`, `nombre`) VALUES
 (2, 'Filosofía'),
 (3, 'Novela'),
 (4, 'Ciencia Ficción'),
-(5, 'Literatura Clásica');
+(5, 'Literatura Clásica'),
+(6, 'Relato Corto');
 
 -- --------------------------------------------------------
 
@@ -119,8 +120,8 @@ INSERT INTO `libros` (`id`, `titulo`, `autor_id`, `descripcion`, `categoria_id`,
 (4, 'Carrie', 4, 'Carrie White, una tímida adolescente críada por una fanática religosa es humillada constantemente por su compañeros de instituto. Sin embargo, Carrie no es una chica cualquiera, la joven posee poderes psíquicos que se manifiestan cuando se siente dominada por la ira. El día del baile de graduación la situación llega a hacérsele insoportable.', 1, 4000.50, 1974, '652fee1c094cf3.82095001.jpg'),
 (5, 'El Extraño', 6, 'El extraño, como muchas de las obras de H.P. Lovecraft, está escrito en primera persona y detalla la vida miserable y aparentemente solitaria de un individuo que parece no haber tenido contacto con nadie durante muchos años.', 6, 1550.00, 1926, '652fefa13351b8.40353199.jpg'),
 (6, 'Rayuela', 7, 'El amor turbulento de Oliveira y La Maga, los amigos del Club de la Serpiente, las caminatas por Paría en busca del cielo y el infierno tienen su reverso en la aventura simétrica de Oliveira, Talira y Traveler en un Buenos Aires teñido por el recuerdo.', 3, 9550.60, 1963, '652ff0513de259.26195816.jpg'),
-(7, 'Ilíada', 11, 'La Ilíada es un poema épico en veinticuatro cantos, que tiene como argumento un episodio del último año de la guerra de Troya: la cólera de Aquiles, el más célebre y valiente soldado griego, contra Agamenón, su comandante, quien le ha robado su esclava Briseida.', 8, 5500.20, 0, '652ff0a13ff6d5.37600038.jpeg'),
-(8, 'La Divina Comedia', 5, 'La Divina Comedia sigue el camino desde el centro de la Tierra, donde se halla Lucifer, hasta el dominio de Dios. El tema de la obra es el recorrido del poeta a través del más allá. En su obra se encuentra gran capacidad para describir el infierno, los círculos, los sufrimientos y los pecadores.', 8, 7550.65, 1472, '652ff1906c6d09.99640103.jpg'),
+(7, 'Ilíada', 8, 'La Ilíada es un poema épico en veinticuatro cantos, que tiene como argumento un episodio del último año de la guerra de Troya: la cólera de Aquiles, el más célebre y valiente soldado griego, contra Agamenón, su comandante, quien le ha robado su esclava Briseida.', 5, 5500.20, 0, '652ff0a13ff6d5.37600038.jpeg'),
+(8, 'La Divina Comedia', 5, 'La Divina Comedia sigue el camino desde el centro de la Tierra, donde se halla Lucifer, hasta el dominio de Dios. El tema de la obra es el recorrido del poeta a través del más allá. En su obra se encuentra gran capacidad para describir el infierno, los círculos, los sufrimientos y los pecadores.', 5, 7550.65, 1472, '652ff1906c6d09.99640103.jpg'),
 (9, 'La Naranja Mécanica', 10, 'Alex es un joven muy agresivo que tiene dos pasiones: la violencia desaforada y Beethoven. Es el jefe de la banda de los drugos, que dan rienda suelta a sus instintos más salvajes aterrorizando a la población.', 3, 3550.00, 1962, '652ff256beec92.99290742.jpg'),
 (10, 'El Discurso del Método', 2, 'Esta obra marca el inicio de la filosofía moderna. Descartes cuestiona aquí que cualquier tipo de conocimiento pueda basarse en algo tan engañoso como los sentidos. Para buscar la verdad tenemos que poner en duda lo que sabemos.', 2, 3365.00, 1637, '652ff511cb9690.30404228.jpg');
 
@@ -172,7 +173,7 @@ ALTER TABLE `autor`
 -- AUTO_INCREMENT de la tabla `categorias`
 --
 ALTER TABLE `categorias`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `libros`
