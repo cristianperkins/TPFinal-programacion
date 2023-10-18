@@ -66,6 +66,7 @@ if (isset($_POST['titulo']) && isset($_POST['autor_id']) && isset($_POST['descri
     $descripcion = $_POST['descripcion'];
     $categoria_id = $_POST['categoria_id'];
     $portada = $_POST['portada'];
+    $anio_publicacion = $_POST['book_year'];
     $gestorLibro->agregarLibro($titulo, $autor_id, $descripcion, $categoria_id, $portada);
 } else {
     $gestorLibro->redirigiraAdmin();

@@ -1,0 +1,127 @@
+/* Estilo para la barra de navegación */
+.navbar-light .navbar-nav .nav-link {
+    font-size: 18px;
+    font-family: 'Arial, Helvetica, sans-serif';
+    text-transform: uppercase;
+    transition: color 0.3s ease-in-out;
+    color: #333;
+}
+
+.navbar-light .navbar-nav .nav-link:hover {
+    color: #007BFF;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Estilo para hacer que las barras de entrada sean más cortas */
+.form-group {
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+/* Estilo para centrar el formulario */
+form {
+    text-align: center;
+    margin: 20px auto;
+}
+
+/* Estilo para el botón "Limpiar" */
+.btn-secondary {
+    background-color: #ccc;
+    color: #000;
+    margin-right: 10px;
+    transition: background-color 0.3s;
+}
+
+.btn-secondary:hover {
+    background-color: #999;
+}
+
+/* Estilo para el botón "Comprar" */
+.btn-primary {
+    background-color: #007bff;
+    color: #fff;
+    transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+/* Estilo para el título "Compra de Libro" */
+h1 {
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+    font-size: 36px;
+    margin-top: 20px;
+}
+
+/* Estilo para la caja que contiene la información del libro */
+.book-info {
+    border: 2px solid #007bff;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 0;
+    box-shadow: 3px 3px 5px 0 rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s;
+}
+
+.book-info:hover {
+    transform: scale(1.02);
+    cursor: pointer;
+}
+
+/* Estilo para los campos de entrada */
+.form-control {
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+    padding: 10px;
+    margin-bottom: 10px;
+    transition: border 0.3s;
+}
+
+.form-control:focus {
+    border-color: #007bff;
+}
+
+/* Estilo para el botón "Comprar" y "Limpiar" */
+.btn {
+    margin-top: 10px;
+}
+
+/* Estilo para resaltar los títulos en la celda del libro */
+.book-info h2 {
+    font-family: 'Arial, sans-serif';
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.book-info p {
+    font-family: 'Arial, sans-serif';
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+/* Estilo para resaltar los labels de los input del formulario de compra */
+.form-group label {
+    font-family: 'Arial, sans-serif';
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/* Estilo para el contenido de los input del formulario de compra */
+.form-group input {
+    font-family: 'Arial, sans-serif';
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    transition: border 0.3s;
+}
+
+.form-group input:focus {
+    border-color: #007bff;
+}

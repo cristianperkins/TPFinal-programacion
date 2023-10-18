@@ -9,7 +9,7 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_email'])) {
 include "db_conexion.php";
 include "php/func-categoria.php";
 include "php/func-autor.php";
-include "php/func-subir-archivo.php"; // Sin este archivo no sube nada
+include "php/func-subir-archivo.php";
 
 $categorias = get_all_categories($conn);
 $autores = get_all_authors($conn);
@@ -19,8 +19,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $descripcion_libro = $_POST['book_description'];
     $id_autor = $_POST['book_author'];
     $id_categoria = $_POST['book_category'];
-
-    // Procesamos por acá la carga de la portada
+    $precio_libro = $_POST['book_price']; // Nuevo campo de precio
+    $anio_publicacion = $_POST['book_year']; // Nuevo campo de fecha de publicación
 
     $extensiones_permitidas = array('jpg', 'jpeg', 'png', 'gif');
     $resultado_subida = subir_archivo($_FILES['book_cover'], 'archivos/cover');
@@ -28,13 +28,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($resultado_subida['estado'] === 'éxito') {
         $nombre_portada = $resultado_subida['archivo'];
 
-        $sql = "INSERT INTO libros (titulo, autor_id, descripcion, categoria_id, portada) VALUES (?, ?, ?, ?, ?)";
+        // Añade la fecha de publicación al formato MySQL (AAAA-MM-DD)
+        $fecha_publicacion = date('Y-m-d', strtotime($anio_publicacion . '-01-01'));
+
+        $sql = "INSERT INTO libros (titulo, autor_id, descripcion, categoria_id, portada, precio, fecha_publicacion) VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(1, $titulo_libro, PDO::PARAM_STR);
         $stmt->bindParam(2, $id_autor, PDO::PARAM_INT);
         $stmt->bindParam(3, $descripcion_libro, PDO::PARAM_STR);
         $stmt->bindParam(4, $id_categoria, PDO::PARAM_INT);
         $stmt->bindParam(5, $nombre_portada, PDO::PARAM_STR);
+        $stmt->bindParam(6, $precio_libro, PDO::PARAM_STR);
+        $stmt->bindParam(7, $fecha_publicacion, PDO::PARAM_STR); // Vincula la fecha de publicación
 
         if ($stmt->execute()) {
             $mensaje_exito = "Libro añadido con éxito";
@@ -91,6 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </nav>
 
+        <div class="container">
         <form action="anadir-libro.php" method="post" enctype="multipart/form-data" class="shadow p-4 rounded mt-5" style="width: 90%; max-width: 50rem;">
             <h1 class="text-center pb-5 display-4 fs-3">Añadir Libro</h1>
             <?php if (isset($mensaje_error)) { ?>
@@ -106,16 +112,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="mb-3">
                 <label class="form-label">Título del libro</label>
                 <input type="text" class="form-control" name="book_title" required>
-                <?php if (isset($errores['titulo'])) { ?>
-                    <div class="text-danger"><?= htmlspecialchars($errores['titulo']); ?></div>
-                <?php } ?>
             </div>
             <div class="mb-3">
                 <label class="form-label">Descripción del libro</label>
                 <textarea class="form-control" name="book_description" rows="4" required></textarea>
-                <?php if (isset($errores['descripcion'])) { ?>
-                    <div class="text-danger"><?= htmlspecialchars($errores['descripcion']); ?></div>
-                <?php } ?>
             </div>
             <div class="mb-3">
                 <label class="form-label">Autor del libro</label>
@@ -125,9 +125,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <option value="<?= $autor->id ?>"><?= htmlspecialchars($autor->nombre . ' ' . $autor->apellido) ?></option>
                     <?php } ?>
                 </select>
-                <?php if (isset($errores['autor'])) { ?>
-                    <div class="text-danger"><?= htmlspecialchars($errores['autor']); ?></div>
-                <?php } ?>
             </div>
             <div class="mb-3">
                 <label class="form-label">Categoría del libro</label>
@@ -137,10 +134,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <option value="<?= $categoria->id ?>"><?= htmlspecialchars($categoria->nombre) ?></option>
                     <?php } ?>
                 </select>
-                <?php if (isset($errores['categoria'])) { ?>
-                    <div class="text-danger"><?= htmlspecialchars($errores['categoria']); ?></div>
-                <?php } ?>
             </div>
+            <div class="mb-3">
+    <label class="form-label">Año de Publicación</label>
+    <input type="number" class="form-control" name="book_year" required min="0" max="<?= date('Y') ?>">
+</div>
+<div class="mb-3">
+    <label class="form-label">Precio (Pesos Argentinos)</label>
+    <div class="input-group">
+        <span class="input-group-text">$</span>
+        <input type="text" class="form-control" name="book_price" value="<?= isset($_POST['book_price']) ? htmlspecialchars($_POST['book_price']) : '' ?>" required>
+    </div>
+</div>
             <div class="mb-3">
                 <label class="form-label">Selección de portada</label>
                 <div class="input-group">
@@ -149,9 +154,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         Cargar Portada
                     </label>
                 </div>
-                <?php if (isset($errores['portada'])) { ?>
-                    <div class="text-danger"><?= htmlspecialchars($errores['portada']); ?></div>
-                <?php } ?>
             </div>
             
             <button type="submit" class="btn btn-primary">Añadir Libro</button>

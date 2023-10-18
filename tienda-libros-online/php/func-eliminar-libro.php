@@ -10,21 +10,17 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_email'])) {
         # Incluye el archivo de conexión a la base de datos
         include "../db_conexion.php";
 
-        # Esta es la lógica para eliminar los libros de nuestra base de datos
-        $sql = "DELETE libros, autor, categorias
-                FROM libros
-                LEFT JOIN autor ON libros.autor_id = autor.id
-                LEFT JOIN categorias ON libros.categoria_id = categorias.id
-                WHERE libros.id = ?";
+        # Esta es la lógica para eliminar un libro sin afectar a las tablas de autor o categorías
+        $sql = "DELETE FROM libros WHERE id = ?";
         $stmt = $conn->prepare($sql);
         $resultado = $stmt->execute([$libro_id]);
 
         if ($resultado) {
-            # Nos lleva  a la página de administrador con un mensaje de éxito al eliminar el libro
+            # Redirige a la página de administrador con un mensaje de éxito al eliminar el libro
             header("Location: ../admin.php?success=Libro eliminado exitosamente");
             exit;
         } else {
-            # Nos vamos  a la página de administrador con un mensaje de error si la eliminación falla
+            # Redirige a la página de administrador con un mensaje de error si la eliminación falla
             header("Location: ../admin.php?error=Error al eliminar el libro");
             exit;
         }

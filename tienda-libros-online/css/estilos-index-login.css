@@ -16,59 +16,97 @@
 
 /* Estilo para las celdas de libros */
 .card {
-    width: 300px; /* Ancho fijo para todas las celdas */
-    height: 450px; /* Alto fijo para todas las celdas */
+    width: 300px;
+    height: 450px;
     border: 1px solid #ddd;
     box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.2);
-    display: flex; /* Activa la disposición flexible */
-    flex-direction: column; /* Apila los elementos verticalmente */
-    justify-content: space-between; /* Centra verticalmente los elementos */
-    text-align: center; /* Centra el texto */
-    padding: 10px; /* Espaciado interno para el contenido de la celda */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    padding: 10px;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    font-family: 'Arial, Helvetica, sans-serif'; /* Nueva tipografía */
+}
+
+/* Efecto de transformación y sombra en el hover de la celda del libro */
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Esquinas dobladas como un libro abierto */
+.card::before, .card::after {
+    content: '';
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background: #fff;
+    transform: rotate(45deg);
+    z-index: -1;
+}
+
+.card::before {
+    top: 0;
+    left: 0;
+    box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.card::after {
+    top: 0;
+    right: 0;
+    box-shadow: -6px 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Icono de libro abierto antes del título */
+.card-title::before {
+    content: '📖';
+    margin-right: 5px;
 }
 
 /* Estilo para la imagen de las tarjetas de libros */
 .card img {
-    max-width: 100%; /* Ancho máximo del 100% para ajustar la imagen a la celda */
-    max-height: 60%; /* Alto máximo del 60% para ajustar la imagen a la celda */
-    object-fit: contain; /* Ajustar la imagen para que quepa sin recortar */
-    margin: 0 auto; /* Centrar la imagen horizontalmente */
+    max-width: 100%;
+    max-height: 60%;
+    object-fit: contain;
+    margin: 0 auto;
 }
 
 /* Estilo para el contenido de la celda (nombre del autor, categoría, descripción) */
 .card-content {
-    text-align: center; /* Centra el texto */
-    flex-grow: 1; /* Hace que el contenido ocupe el espacio disponible */
-    display: flex; /* Activa la disposición flexible para el contenido */
-    flex-direction: column; /* Apila los elementos verticalmente */
-    justify-content: space-between; /* Centra verticalmente el contenido */
+    text-align: center;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 /* Estilo para el título del libro */
 .card-title {
-    font-size: 16px; /* Tamaño de fuente para el título */
-    font-weight: bold; /* Texto en negrita */
-    margin: 5px 0; /* Espaciado del título */
+    font-size: 16px;
+    font-weight: bold;
+    margin: 5px 0;
 }
 
 /* Estilo para la categoría del libro */
 .card-category {
-    font-size: 14px; /* Tamaño de fuente para la categoría */
-    color: #888; /* Color de texto gris */
-    margin: 5px 0; /* Espaciado de la categoría */
+    font-size: 14px;
+    color: #888;
+    margin: 5px 0;
+    font-family: 'Arial, Helvetica, sans-serif'; /* Nueva tipografía */
 }
 
 /* Estilo para la descripción del libro */
 .card-description {
-    font-size: 12px; /* Tamaño de fuente para la descripción */
-    overflow: hidden; /* Oculta el texto que excede */
-    text-overflow: ellipsis; /* Muestra puntos suspensivos (...) para el texto excedido */
-    white-space: nowrap; /* Evita el desbordamiento de texto */
+    font-size: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 /* Estilo para el botón Comprar */
 .btn-warning {
-    margin: 10px auto; /* Centrar el botón horizontalmente y agregar espacio arriba y abajo */
+    margin: 10px auto;
 }
 
 /* Estilo para el formulario de búsqueda */

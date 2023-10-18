@@ -6,6 +6,8 @@ class Libro {
     public $descripcion;
     public $categoria_id;
     public $portada;
+    public $precio; // Agregamos la propiedad precio
+    public $fecha_publicacion; // Agregamos la propiedad fecha_publicacion
 }
 
 function get_all_books($con, $order = 'ASC') {
@@ -23,6 +25,8 @@ function get_all_books($con, $order = 'ASC') {
         $libro->descripcion = $row['descripcion'];
         $libro->categoria_id = $row['categoria_id'];
         $libro->portada = $row['portada'];
+        $libro->precio = $row['precio']; // Asignamos el valor del precio
+        $libro->fecha_publicacion = $row['fecha_publicacion']; // Asignamos el valor de fecha_publicacion
         $libros[] = $libro;
     }
 

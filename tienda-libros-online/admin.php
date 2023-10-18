@@ -16,7 +16,7 @@ $libros = get_all_books($conn, 'ASC');
 
 # Incluir la función de los autores
 include "php/func-autor.php";
-$autores = get_all_authors($conn); // Cambio en el nombre de la función
+$autores = get_all_authors($conn);
 
 # Incluir la función de las categorías
 include "php/func-categoria.php";
@@ -50,7 +50,7 @@ $categorias = get_all_categories($conn);
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="index.php">Tienda</a>
                         </li>
-                        <li class "nav-item">
+                        <li class="nav-item">
                             <a class="nav-link" href="anadir-libro.php">Añadir Libro</a>
                         </li>
                         <li class="nav-item">
@@ -79,56 +79,59 @@ $categorias = get_all_categories($conn);
                     <th>Autor</th>
                     <th>Descripción</th>
                     <th>Categoría</th>
+                    <th>Precio</th> <!-- Nueva columna de Precio -->
+                    <th>Año de Publicación</th> <!-- Nueva columna de Año de Publicación -->
                     <th>Acción</th>
                 </tr>
             </thead>
             <tbody>
-    <?php foreach ($libros as $libro) { ?>
-        <tr>
-            <td><?= $libro->id ?></td>
-            <td>
-                <img width="100" src="archivos/cover/<?= $libro->portada ?>">
-            </td>
-            <td><?= htmlspecialchars($libro->titulo) ?></td>
-            <td>
-                <?php
-                $autorNombre = " ";
-                foreach ($autores as $autor) {
-                    if ($autor->id == $libro->autor_id) {
-                        $autorNombre = htmlspecialchars($autor->nombre . ' ' . $autor->apellido);
-                        break;
-                    }
-                }
-                echo $autorNombre;
-                ?>
-            </td>
-            <td><?= htmlspecialchars($libro->descripcion) ?></td>
-            <td>
-                <?php
-                $categoriaNombre = " ";
-                foreach ($categorias as $categoria) {
-                    if ($categoria->id == $libro->categoria_id) {
-                        $categoriaNombre = htmlspecialchars($categoria->nombre);
-                        break;
-                    }
-                }
-                echo $categoriaNombre;
-                ?>
-            </td>
-            <td>
-                <div class="btn-group">
-                        <a href="editar-libro.php?id=<?= $libro->id ?>" class="btn btn-warning" style="margin-right: 5px;">Editar</a>
-                        <form action="php/func-eliminar-libro.php" method="post">
-                        <input type="hidden" name="libro_id" value="<?= $libro->id ?>">
-                        <button type="submit" class="btn btn-danger">Eliminar</button>
-                    </form>
-                </div>
-            </td>
-        </tr>
-    <?php } ?>
+            <?php foreach ($libros as $libro) { ?>
+                <tr>
+                    <td><?= $libro->id ?></td>
+                    <td>
+                        <img width="100" src="archivos/cover/<?= $libro->portada ?>">
+                    </td>
+                    <td><?= htmlspecialchars($libro->titulo) ?></td>
+                    <td>
+                        <?php
+                        $autorNombre = " ";
+                        foreach ($autores as $autor) {
+                            if ($autor->id == $libro->autor_id) {
+                                $autorNombre = htmlspecialchars($autor->nombre . ' ' . $autor->apellido);
+                                break;
+                            }
+                        }
+                        echo $autorNombre;
+                        ?>
+                    </td>
+                    <td><?= htmlspecialchars($libro->descripcion) ?></td>
+                    <td>
+                        <?php
+                        $categoriaNombre = " ";
+                        foreach ($categorias as $categoria) {
+                            if ($categoria->id == $libro->categoria_id) {
+                                $categoriaNombre = htmlspecialchars($categoria->nombre);
+                                break;
+                            }
+                        }
+                        echo $categoriaNombre;
+                        ?>
+                    </td>
+                    <td>$<?= number_format($libro->precio, 2) ?></td> <!-- Muestra el Precio -->
+                    <td><?= $libro->fecha_publicacion ?></td> <!-- Muestra la Fecha de Publicación -->
+                    <td>
+                        <div class="btn-group">
+                            <a href="editar-libro.php?id=<?= $libro->id ?>" class="btn btn-warning" style="margin-right: 5px;">Editar</a>
+                            <form action="php/func-eliminar-libro.php" method="post">
+                                <input type="hidden" name="libro_id" value="<?= $libro->id ?>">
+                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            <?php } ?>
             </tbody>
         </table>
-
         <!-- Tabla para mostrar las categorías -->
 
         <h4>Agregar Categorías</h4>
