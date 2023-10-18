@@ -60,6 +60,9 @@ $categorias = get_all_categories($conn);
                             <a class="nav-link" href="anadir-autor.php">Añadir Autor</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="lista-usuarios.php">Lista de Usuarios</a> <!-- Creación de página para mostrar lista de usuarios  -->
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="logout.php">Cerrar Sesión</a>
                         </li>
                     </ul>
