@@ -139,7 +139,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </li>
                     <?php if (isset($_SESSION['user_id'])) { ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="php/func-validar-sesion.php"><?php echo obtenerNombreDeUsuario($_SESSION['user_id'], $conn); ?></a>
+                            <a class="nav-link"><?php echo obtenerNombreDeUsuario($_SESSION['user_id'], $conn); ?></a>
                         </li>
                     <?php } ?>
                 </ul>
