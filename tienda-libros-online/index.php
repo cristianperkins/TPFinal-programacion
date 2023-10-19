@@ -72,6 +72,9 @@ $priceAverages = $stmtPriceAverage->fetchAll(PDO::FETCH_ASSOC);
 $adminLink = '';
 $userLink = '';
 $loginLink = '<li class="nav-item">
+                <a class="nav-link" href="registro.php">Registro</a>
+            </li>';
+$loginLink .= '<li class="nav-item">
                 <a class="nav-link" href="login.php">Login</a>
             </li>';
 
