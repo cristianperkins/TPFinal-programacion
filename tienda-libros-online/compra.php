@@ -4,6 +4,9 @@ session_start();
 # Incluye tu archivo de configuración de base de datos (db_conexion.php)
 include "db_conexion.php";
 
+// Incluye el archivo func-validar-sesion.php
+include "php/func-validar-sesion.php";
+
 // Establecer una variable para errores
 $errors = [];
 
@@ -45,24 +48,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];
     $email_confirmation = $_POST['email_confirmation'];
 
-  // Validación de campos para mensajes de error
-if (empty($nombre)) {
-    $errors['nombre'] = "El nombre es requerido.";
-} elseif (!preg_match('/^[A-Za-záéíóúÁÉÍÓÚñÑ\s]+$/', $nombre)) {
-    $errors['nombre'] = "El nombre no debe contener símbolos o números. Solo se permiten letras y espacios.";
-}
+    // Validación de campos para mensajes de error
+    if (empty($nombre)) {
+        $errors['nombre'] = "El nombre es requerido.";
+    } elseif (!preg_match('/^[A-Za-záéíóúÁÉÍÓÚñÑ\s]+$/', $nombre)) {
+        $errors['nombre'] = "El nombre no debe contener símbolos o números. Solo se permiten letras y espacios.";
+    }
 
-if (empty($apellido)) {
-    $errors['apellido'] = "El apellido es requerido.";
-} elseif (!preg_match('/^[A-Za-záéíóúÁÉÍÓÚñÑ\s]+$/', $apellido)) {
-    $errors['apellido'] = "El apellido no debe contener símbolos o números. Solo se permiten letras y espacios.";
-}
+    if (empty($apellido)) {
+        $errors['apellido'] = "El apellido es requerido.";
+    } elseif (!preg_match('/^[A-Za-záéíóúÁÉÍÓÚñÑ\s]+$/', $apellido)) {
+        $errors['apellido'] = "El apellido no debe contener símbolos o números. Solo se permiten letras y espacios.";
+    }
 
-if (empty($direccion)) {
-    $errors['direccion'] = "La dirección es requerida.";
-} elseif (preg_match('/^\d/', $direccion)) {
-    $errors['direccion'] = "La dirección no puede comenzar con números.";
-}
+    if (empty($direccion)) {
+        $errors['direccion'] = "La dirección es requerida.";
+    } elseif (preg_match('/^\d/', $direccion)) {
+        $errors['direccion'] = "La dirección no puede comenzar con números.";
+    }
 
     if (empty($ciudad)) {
         $errors['ciudad'] = "La ciudad es requerida.";
@@ -98,7 +101,7 @@ if (empty($direccion)) {
         // Mostrar mensaje de compra exitosa
         echo '<script>';
         echo 'alert("Gracias por comprar el libro ' . $libro_comprado['titulo'] . '. Esté atento a su correo electrónico para el seguimiento de la compra. Gracias por confiar en nuestro servicio.");';
-        echo 'window.location.href = "index.php";'; // Redirige al indice
+        echo 'window.location.href = "index.php";'; // Redirige al índice
         echo '</script>';
     }
 }
@@ -110,11 +113,10 @@ if (empty($direccion)) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Compra de Libro</title>
-    <!-- Enlace al archivoCSS de Bootstrap 5 -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-<!-- Enlace al archivo CSS personalizado -->
-<link href="css/estilos-compra.css" rel="stylesheet">
-
+    <!-- Enlace al archivo CSS de Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <!-- Enlace al archivo CSS personalizado -->
+    <link href="css/estilos-compra.css" rel="stylesheet">
 </head>
 <body>
     <!-- Barra de navegación -->
@@ -135,74 +137,79 @@ if (empty($direccion)) {
                     <li class="nav-item">
                         <a class="nav-link" href="sobre-nosotros.php">Sobre Nosotros</a>
                     </li>
+                    <?php if (isset($_SESSION['user_id'])) { ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="php/func-validar-sesion.php"><?php echo obtenerNombreDeUsuario($_SESSION['user_id'], $conn); ?></a>
+                        </li>
+                    <?php } ?>
                 </ul>
             </div>
         </div>
     </nav>
     <div class="container mt-4">
-    <h1>Compra de Libro</h1>
+        <h1>Compra de Libro</h1>
 
-    <div class="text-center book-info">
-        <!-- Obtenemos la imagen del libro -->
-        <img src="archivos/cover/<?= $libro_comprado['portada'] ?>" alt="Portada" style="max-height: 150px">
+        <div class="text-center book-info">
+            <!-- Obtenemos la imagen del libro -->
+            <img src="archivos/cover/<?= $libro_comprado['portada'] ?>" alt="Portada" style="max-height: 150px">
 
-        <!-- Mostramos la información del libro -->
-        <h2><?= $libro_comprado['titulo'] ?></h2>
-        <p>Autor: <?= $libro_comprado['autor_nombre'] . ' ' . $libro_comprado['autor_apellido'] ?></p>
-        <p>Categoría: <?= $libro_comprado['categoria_nombre'] ?></p>
-        <p>Descripción: <?= $libro_comprado['descripcion'] ?></p>
-        <p>Precio: $<?= number_format($_SESSION['precio'], 2) ?> pesos argentinos</p>
-        <p>Año de Publicación: <?= $libro_comprado['fecha_publicacion'] ?></p>
-    </div>
+            <!-- Mostramos la información del libro -->
+            <h2><?= $libro_comprado['titulo'] ?></h2>
+            <p>Autor: <?= $libro_comprado['autor_nombre'] . ' ' . $libro_comprado['autor_apellido'] ?></p>
+            <p>Categoría: <?= $libro_comprado['categoria_nombre'] ?></p>
+            <p>Descripción: <?= $libro_comprado['descripcion'] ?></p>
+            <p>Precio: $<?= number_format($_SESSION['precio'], 2) ?> pesos argentinos</p>
+            <p>Año de Publicación: <?= $libro_comprado['fecha_publicacion'] ?></p>
+        </div>
 
-    <h2>Datos de Compra</h2>
-    <!-- Formulario de compra -->
-    <form method="post">
-        <div class="form-group">
-            <label for="nombre">Nombre:</label>
-            <input type="text" class="form-control" id="nombre" name="nombre" required>
-            <?php if (isset($errors['nombre'])) { ?>
-                <div class="text-danger"><?= $errors['nombre'] ?></div>
-            <?php } ?>
-        </div>
-        <div class="form-group">
-            <label for="apellido">Apellido:</label>
-            <input type="text" class="form-control" id="apellido" name="apellido" required>
-            <?php if (isset($errors['apellido'])) { ?>
-                <div class="text-danger"><?= $errors['apellido'] ?></div>
-            <?php } ?>
-        </div>
-        <div class="form-group">
-            <label for="direccion">Dirección:</label>
-            <input type="text" class="form-control" id="direccion" name="direccion" required>
-            <?php if (isset($errors['direccion'])) { ?>
-                <div class="text-danger"><?= $errors['direccion'] ?></div>
-            <?php } ?>
-        </div>
-        <div class="form-group">
-            <label for="ciudad">Ciudad:</label>
-            <input type="text" class="form-control" id="ciudad" name="ciudad" required>
-            <?php if (isset($errors['ciudad'])) { ?>
-                <div class="text-danger"><?= $errors['ciudad'] ?></div>
-            <?php } ?>
-        </div>
-        <div class="form-group">
-            <label for="codigo_postal">Código Postal:</label>
-            <input type="text" class="form-control" id="codigo_postal" name="codigo_postal" required pattern="[0-9]{4}">
-            <?php if (isset($errors['codigo_postal'])) { ?>
-                <div class="text-danger"><?= $errors['codigo_postal'] ?></div>
-            <?php } ?>
-        </div>
-        <div class="form-group">
-            <label for="telefono">Teléfono:</label>
-            <input type="tel" class="form-control" id="telefono" name="telefono" required pattern="[0-9]{10,}">
-            <?php if (isset($errors['telefono'])) { ?>
-                <div class="text-danger"><?= $errors['telefono'] ?></div>
-            <?php } ?>
-        </div>
-        <div class="form-group">
-            <label for="email">E-mail:</label>
-            <input type="email" class="form-control" id="email" name="email"       required>
+        <h2>Datos de Compra</h2>
+        <!-- Formulario de compra -->
+        <form method="post">
+            <div class="form-group">
+                <label for="nombre">Nombre:</label>
+                <input type="text" class="form-control" id="nombre" name="nombre" required>
+                <?php if (isset($errors['nombre'])) { ?>
+                    <div class="text-danger"><?= $errors['nombre'] ?></div>
+                <?php } ?>
+            </div>
+            <div class="form-group">
+                <label for="apellido">Apellido:</label>
+                <input type="text" class="form-control" id="apellido" name="apellido" required>
+                <?php if (isset($errors['apellido'])) { ?>
+                    <div class="text-danger"><?= $errors['apellido'] ?></div>
+                <?php } ?>
+            </div>
+            <div class="form-group">
+                <label for="direccion">Dirección:</label>
+                <input type="text" class="form-control" id="direccion" name="direccion" required>
+                <?php if (isset($errors['direccion'])) { ?>
+                    <div class="text-danger"><?= $errors['direccion'] ?></div>
+                <?php } ?>
+            </div>
+            <div class="form-group">
+                <label for="ciudad">Ciudad:</label>
+                <input type="text" class="form-control" id="ciudad" name="ciudad" required>
+                <?php if (isset($errors['ciudad'])) { ?>
+                    <div class="text-danger"><?= $errors['ciudad'] ?></div>
+                <?php } ?>
+            </div>
+            <div class="form-group">
+                <label for="codigo_postal">Código Postal:</label>
+                <input type="text" class="form-control" id="codigo_postal" name="codigo_postal" required pattern="[0-9]{4}">
+                <?php if (isset($errors['codigo_postal'])) { ?>
+                    <div class="text-danger"><?= $errors['codigo_postal'] ?></div>
+                <?php } ?>
+            </div>
+            <div class="form-group">
+                <label for="telefono">Teléfono:</label>
+                <input type="tel" class="form-control" id="telefono" name="telefono" required pattern="[0-9]{10,}">
+                <?php if (isset($errors['telefono'])) { ?>
+                    <div class="text-danger"><?= $errors['telefono'] ?></div>
+                <?php } ?>
+            </div>
+            <div class="form-group">
+                <label for="email">E-mail:</label>
+                <input type="email" class="form-control" id="email" name="email" required>
                 <?php if (isset($errors['email'])) { ?>
                     <div class="text-danger"><?= $errors['email'] ?></div>
                 <?php } ?>

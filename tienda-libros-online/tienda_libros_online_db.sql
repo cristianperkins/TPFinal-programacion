@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 19-10-2023 a las 01:17:42
+-- Tiempo de generación: 19-10-2023 a las 03:26:16
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -67,7 +67,9 @@ INSERT INTO `autor` (`id`, `nombre`, `apellido`) VALUES
 (7, 'Julio', 'Cortázar'),
 (8, 'Homero', ''),
 (9, 'Frank', 'Herbert'),
-(10, 'Anthony ', 'Burgess');
+(10, 'Anthony ', 'Burgess'),
+(11, 'Sheridan ', 'Le Fanu'),
+(12, 'Bram ', 'Stoker');
 
 -- --------------------------------------------------------
 
@@ -123,7 +125,9 @@ INSERT INTO `libros` (`id`, `titulo`, `autor_id`, `descripcion`, `categoria_id`,
 (7, 'Ilíada', 8, 'La Ilíada es un poema épico en veinticuatro cantos, que tiene como argumento un episodio del último año de la guerra de Troya: la cólera de Aquiles, el más célebre y valiente soldado griego, contra Agamenón, su comandante, quien le ha robado su esclava Briseida.', 5, 5500.20, 0, '652ff0a13ff6d5.37600038.jpeg'),
 (8, 'La Divina Comedia', 5, 'La Divina Comedia sigue el camino desde el centro de la Tierra, donde se halla Lucifer, hasta el dominio de Dios. El tema de la obra es el recorrido del poeta a través del más allá. En su obra se encuentra gran capacidad para describir el infierno, los círculos, los sufrimientos y los pecadores.', 5, 7550.65, 1472, '652ff1906c6d09.99640103.jpg'),
 (9, 'La Naranja Mécanica', 10, 'Alex es un joven muy agresivo que tiene dos pasiones: la violencia desaforada y Beethoven. Es el jefe de la banda de los drugos, que dan rienda suelta a sus instintos más salvajes aterrorizando a la población.', 3, 3550.00, 1962, '652ff256beec92.99290742.jpg'),
-(10, 'El Discurso del Método', 2, 'Esta obra marca el inicio de la filosofía moderna. Descartes cuestiona aquí que cualquier tipo de conocimiento pueda basarse en algo tan engañoso como los sentidos. Para buscar la verdad tenemos que poner en duda lo que sabemos.', 2, 3365.00, 1637, '652ff511cb9690.30404228.jpg');
+(10, 'El Discurso del Método', 2, 'Esta obra marca el inicio de la filosofía moderna. Descartes cuestiona aquí que cualquier tipo de conocimiento pueda basarse en algo tan engañoso como los sentidos. Para buscar la verdad tenemos que poner en duda lo que sabemos.', 2, 3365.00, 1637, '652ff511cb9690.30404228.jpg'),
+(11, 'Drácula', 12, ' El abogado Jonathan Harker descubre que, en el castillo del conde Drácula, este se comporta por las noches como un vampiro. Harker sigue a Drácula a Inglaterra, donde el conde busca nuevas víctimas, entre ellas, a Mina, la prometida de Harker.', 1, 7550.00, 1897, '6530844d0fc049.19962505.jpeg'),
+(12, 'Carmilla', 11, 'Aislada en el viejo y austero castillo de su anciano padre en Styria, Laura sueña con tener compañía y amistad. Las circunstancias hacen que su padre ofrezca hospedaje a una viajera misteriosa que podría ser la amiga que Laura necesita.', 6, 2750.20, 1872, '65308498888a28.29125622.jpg');
 
 -- --------------------------------------------------------
 
@@ -139,6 +143,13 @@ CREATE TABLE `usuarios` (
   `fecha_nacimiento` date NOT NULL,
   `telefono` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `usuarios`
+--
+
+INSERT INTO `usuarios` (`id`, `nombre_usuario`, `correo_electronico`, `contrasena`, `fecha_nacimiento`, `telefono`) VALUES
+(18, 'MarDoria', 'mardoria97@gmail.com', '$2y$10$BYvpIyEDPmqlIybqc3gjzOTspNFGY9Knm63scSq/eaZBkkmVGy/mi', '1997-12-01', '3413369818');
 
 --
 -- Índices para tablas volcadas
@@ -188,7 +199,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT de la tabla `autor`
 --
 ALTER TABLE `autor`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `categorias`
@@ -200,13 +211,13 @@ ALTER TABLE `categorias`
 -- AUTO_INCREMENT de la tabla `libros`
 --
 ALTER TABLE `libros`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

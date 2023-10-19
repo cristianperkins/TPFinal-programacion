@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Comprueba si ambos campos están vacíos
     if ($emailError && $passwordError) {
         // Si ambos campos están vacíos, muestra un mensaje que hace referencia a ambos
-        $errorMensaje= "Son necesarios un E-mail y una contraseña.";
+        $errorMensaje = "Son necesarios un E-mail y una contraseña.";
     } elseif ($emailError) {
         // Si solo el Email está vacío, muestra un mensaje de error
         $errorMensaje = "Es necesario un E-mail.";
@@ -34,13 +34,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Si solo la contraseña está vacía, muestra un mensaje de error
         $errorMensaje = "Es necesaria una contraseña.";
     } else {
-        // Valida si el correo electrónico está en la base de datos
+        // Valida si el correo electrónico está en la base de datos de administradores
         $sql = "SELECT * FROM admin WHERE email=?";
         $stmt = $conn->prepare($sql);
         $stmt->execute([$email]);
 
         if ($stmt->rowCount() === 1) {
-            // Si el Email se encuentra en la base de datos, no importa la contraseña
+            // Si el Email se encuentra en la base de datos de administradores, no importa la contraseña
             session_start();
             $user = $stmt->fetch();
             $user_id = $user['id'];
@@ -50,8 +50,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             header("Location: ../admin.php");
             exit;
         } else {
-            // Si el Email no se encuentra en la base de datos, muestra un mensaje de error
-            $errorMensaje = "El E-mail no figura en nuestra base de datos.";
+            // Si el Email no se encuentra en la base de datos de administradores, verifica si es un usuario registrado
+            $sql = "SELECT * FROM usuarios WHERE correo_electronico=?";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute([$email]);
+
+            if ($stmt->rowCount() === 1) {
+                // Si el Email se encuentra en la base de datos de usuarios registrados, verifica la contraseña
+                $user = $stmt->fetch();
+                if (password_verify($password, $user['contrasena'])) {
+                    session_start();
+                    $_SESSION['user_id'] = $user['id'];
+                    $_SESSION['user_email'] = $user['correo_electronico'];
+                    header("Location: ../index.php");
+                    exit;
+                } else {
+                    $errorMensaje = "Contraseña incorrecta.";
+                }
+            } else {
+                $errorMensaje = "El E-mail no figura en nuestra base de datos.";
+            }
         }
     }
 }
@@ -60,9 +78,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 header("Location: ../login.php?error=" . urlencode($errorMensaje));
 exit;
 ?>
-
-
-
-
-
-

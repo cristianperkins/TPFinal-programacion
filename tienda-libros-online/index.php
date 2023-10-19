@@ -1,8 +1,10 @@
 <?php
 session_start();
 
-# Database Connection File
+# Conexión a la base de datos
 include "db_conexion.php";
+
+
 
 # Recuperar todas las categorías y autores de la base de datos
 $queryCategories = "SELECT * FROM categorias";
@@ -57,20 +59,45 @@ if (isset($_GET['search'])) {
     $books = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-# Verificamos si el usuario admin está autenticado
+# Agregar consulta para el precio promedio por categoría
+
+$queryPriceAverage = "SELECT c.nombre AS categoria, AVG(l.precio) AS precio_promedio
+                    FROM libros l
+                    INNER JOIN categorias c ON l.categoria_id = c.id
+                    GROUP BY c.nombre";
+$stmtPriceAverage = $conn->query($queryPriceAverage);
+$priceAverages = $stmtPriceAverage->fetchAll(PDO::FETCH_ASSOC);
+
+# Inicializamos las variables $adminLink y $loginLink como cadenas vacías
 $adminLink = '';
+$userLink = '';
 $loginLink = '<li class="nav-item">
                 <a class="nav-link" href="login.php">Login</a>
             </li>';
 
-if (isset($_SESSION['user_id']) && $_SESSION['user_email'] === 'email_del_admin@example.com') {
-    $adminLink = '<li class="nav-item">
-                    <a class="nav-link" href="admin.php">Admin</a>
-                </li>';
-    $loginLink = '<li class="nav-item">
-                    <a class="nav-link" href="logout.php">Cerrar Sesión</a>
-                </li>';
+if (isset($_SESSION['user_id'])) {
+    include "php/func-validar-sesion.php";
+
+    if (esAdmin($_SESSION['user_id'], $conn)) {
+        // El usuario logueado es un administrador
+        $adminLink = '<li class="nav-item">
+                        <a class="nav-link" href="admin.php">Admin</a>
+                    </li>';
+        $loginLink = '<li class="nav-item">
+                        <a class="nav-link" href="logout.php">Cerrar Sesión</a>
+                    </li>';
+    } else {
+        // El usuario logueado no es administrador; es un usuario registrado a través de registro.php
+        $userName = obtenerNombreDeUsuario($_SESSION['user_id'], $conn);
+        $userLink = "<li class='nav-item'>
+                        <a class='nav-link'>$userName</a>
+                    </li>";
+        $loginLink = '<li class="nav-item">
+                        <a class="nav-link" href="logout.php">Cerrar Sesión</a>
+                    </li>';
+    }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -92,22 +119,20 @@ if (isset($_SESSION['user_id']) && $_SESSION['user_email'] === 'email_del_admin@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="index.php">Tienda</a>
-                    </li>
-                    <?= $adminLink ?>
-                    <li class="nav-item">
-                        <a class="nav-link" href="contacto.php">Contacto</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="sobre-nosotros.php">Sobre Nosotros</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="registro.php">Registro</a>
-                    </li>
-                    <?= $loginLink ?>
-                </ul>
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="index.php">Tienda</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="contacto.php">Contacto</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="sobre-nosotros.php">Sobre Nosotros</a>
+                </li>
+                <?= $adminLink ?>
+                <?= $userLink ?>
+                <?= $loginLink ?>
+            </ul>
             </div>
         </div>
     </nav>
@@ -121,58 +146,81 @@ if (isset($_SESSION['user_id']) && $_SESSION['user_email'] === 'email_del_admin@
     </form>
 </div>
 
- 
-
-        <div class="row">
-            <div class="col-md-9">
-                <div class="row">
-                    <?php foreach ($books as $book) { ?>
-                        <div class="col-md-4 mb-4">
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <h4 style="background-color: #007BFF; color: white; padding: 5px;">Categoría</h4>
+            <ul class="list-group">
+                <li class="list-group-item"><a href="index.php">Todos</a></li>
+                <?php foreach ($categories as $category) { ?>
+                    <li class="list-group-item">
+                        <a href="index.php?category=<?= $category['id'] ?>"><?= $category['nombre'] ?></a>
+                    </li>
+                <?php } ?>
+            </ul>
+    
+            <h4 class="mt-4" style="background-color: #007BFF; color: white; padding: 5px;">Autor</h4>
+            <ul class="list-group">
+                <li class="list-group-item"><a href="index.php">Todos</a></li>
+                <?php foreach ($authors as $author) { ?>
+                    <li class="list-group-item">
+                        <a href="index.php?author=<?= $author['id'] ?>"><?= $author['nombre'] . ' ' . $author['apellido'] ?></a>
+                    </li>
+                <?php } ?>
+            </ul>
+        </div>
+        <div class="col-md-9">
+            <div class="row">
+                <?php foreach ($books as $book) { ?>
+                    <div class="col-md-4 mb-4">
                         <div class="card box-shadow">
-                                <img class="card-img-top" src="archivos/cover/<?= $book['portada'] ?>" alt="Portada" style="max-height: 150px">
-                                <div class="card-body">
-                                    <h5 class="card-title"><?= $book['titulo'] ?></h5>
-                                    <p class="card-text">
-                                        <strong>Autor:</strong> <?= $book['autor_nombre'] . ' ' . $book['autor_apellido'] ?><br>
-                                        <strong>Categoría:</strong> <?= $book['categoria'] ?><br>
-                                        <strong>Precio:</strong> <?= '$' . $book['precio'] ?><br>
-                                        <strong>Año de Publicación:</strong> <?= $book['fecha_publicacion'] ?><br>
-                                        <strong>Descripción:</strong> <?= substr($book['descripcion'], 0, 75) . (strlen($book['descripcion']) > 100 ? "..." : "") ?>
-                                    </p>
-                                    <div class="d-flex justify-content-end">
-                                        <button type="button" class="btn btn-warning">
-                                            <a href="compra.php?book_id=<?= $book['id'] ?>" style="text-decoration: none; color: white;">Comprar</a>
-                                        </button>
-                                    </div>
+                            <img class="card-img-top" src="archivos/cover/<?= $book['portada'] ?>" alt="Portada" style="max-height: 150px">
+                            <div class="card-body">
+                                <h5 class="card-title"><?= $book['titulo'] ?></h5>
+                                <p class="card-text">
+                                    <strong>Autor:</strong> <?= $book['autor_nombre'] . ' ' . $book['autor_apellido'] ?><br>
+                                    <strong>Categoría:</strong> <?= $book['categoria'] ?><br>
+                                    <strong>Precio:</strong> <?= '$' . $book['precio'] ?><br>
+                                    <strong>Año de Publicación:</strong> <?= $book['fecha_publicacion'] ?><br>
+                                    <strong>Descripción:</strong> <?= substr($book['descripcion'], 0, 75) . (strlen($book['descripcion']) > 100 ? "..." : "") ?>
+                                </p>
+                                <div class="d-flex justify-content-end">
+                                    <button type="button" class="btn btn-warning">
+                                        <a href="compra.php?book_id=<?= $book['id'] ?>" style="text-decoration: none; color: white;">Comprar</a>
+                                    </button>
                                 </div>
                             </div>
                         </div>
-                    <?php } ?>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <h4 style="background-color: #007BFF; color: white; padding: 5px;">Categoría</h4>
-                <ul class="list-group">
-                    <li class="list-group-item"><a href="index.php">Todos</a></li>
-                    <?php foreach ($categories as $category) { ?>
-                        <li class="list-group-item">
-                            <a href="index.php?category=<?= $category['id'] ?>"><?= $category['nombre'] ?></a>
-                        </li>
-                    <?php } ?>
-                </ul>
-
-                <h4 class="mt-4" style="background-color: #007BFF; color: white; padding: 5px;">Autor</h4>
-                <ul class="list-group">
-                    <li class="list-group-item"><a href="index.php">Todos</a></li>
-                    <?php foreach ($authors as $author) { ?>
-                        <li class="list-group-item">
-                            <a href="index.php?author=<?= $author['id'] ?>"><?= $author['nombre'] . ' ' . $author['apellido'] ?></a>
-                        </li>
-                    <?php } ?>
-                </ul>
+                    </div>
+                <?php } ?>
             </div>
         </div>
     </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h4>Precio Promedio por Categoría</h4>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Categoría</th>
+                        <th>Precio Promedio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($priceAverages as $average) { ?>
+                        <tr>
+                            <td><?= $average['categoria'] ?></td>
+                            <td><?= '$' . number_format($average['precio_promedio'], 2) ?></td>
+                        </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
     <!-- Incluye el archivo JavaScript de Bootstrap 5 al final del body para mejorar el rendimiento -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
