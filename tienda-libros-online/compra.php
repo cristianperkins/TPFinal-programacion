@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-# Incluye tu archivo de configuración de base de datos (db_conexion.php)
+# Incluye el archivo de configuración de base de datos (db_conexion.php)
 include "db_conexion.php";
 
 // Incluye el archivo func-validar-sesion.php

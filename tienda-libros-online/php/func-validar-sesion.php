@@ -1,6 +1,6 @@
 <?php
 function obtenerNombreDeUsuario($user_id, $conn) {
-    // Consulta para obtener el nombre del usuario
+    // Consultamos para obtener el nombre del usuario
     $sql = "SELECT nombre_usuario FROM usuarios WHERE id = :user_id";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
