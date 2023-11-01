@@ -72,7 +72,7 @@ $priceAverages = $stmtPriceAverage->fetchAll(PDO::FETCH_ASSOC);
 $adminLink = '';
 $userLink = '';
 $loginLink = '<li class="nav-item">
-                <a class="nav-link" href="registro.php">Registro</a>
+                <a class="nav-link" href="views/RegistroUsuarioFormulario.php">Registro</a>
             </li>';
 $loginLink .= '<li class="nav-item">
                 <a class="nav-link" href="login.php">Login</a>
@@ -90,7 +90,7 @@ if (isset($_SESSION['user_id'])) {
                         <a class="nav-link" href="logout.php">Cerrar Sesión</a>
                     </li>';
     } else {
-        // El usuario logueado no es administrador; es un usuario registrado a través de registro.php
+        // El usuario logueado no es administrador; es un usuario registrado a través de RegistroUsuarioFormulario-usuario.php
         $userName = obtenerNombreDeUsuario($_SESSION['user_id'], $conn);
         $userLink = "<li class='nav-item'>
                         <a class='nav-link'>$userName</a>

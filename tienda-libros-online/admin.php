@@ -57,10 +57,10 @@ $categorias = get_all_categories($conn);
                             <a class="nav-link" href="anadir-categoria.php">Añadir Categoría</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="anadir-autor.php">Añadir Autor</a>
+                            <a class="nav-link" href="../views/AnadirAutor.php">Añadir Autor</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="lista-usuarios.php">Lista de Usuarios</a> <!-- Creación de página para mostrar lista de usuarios -->
+                            <a class="nav-link" href="../views/ListaUsuarios.php">Lista de Usuarios</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="logout.php">Cerrar Sesión</a>
@@ -177,7 +177,7 @@ $categorias = get_all_categories($conn);
                         <td><?= $autor->id ?></td>
                         <td><?= htmlspecialchars($autor->nombre . ' ' . $autor->apellido) ?></td>
                         <td>
-                            <a href="editar-autor.php?id=<?=$autor->id ?>" class="btn btn-warning">Editar</a>
+                            <a href="../views/EditarAutor.php?id=<?=$autor->id ?>" class="btn btn-warning">Editar</a>
                             <a href="php/func-eliminar-autor.php?id=<?= $autor->id ?>" class="btn btn-danger">Eliminar</a>
                         </td>
                     </tr>
