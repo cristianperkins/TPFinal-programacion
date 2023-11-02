@@ -2,10 +2,10 @@
 session_start();
 
 # Incluye el archivo de configuración de base de datos (db_conexion.php)
-include "db_conexion.php";
+include "config/db_conexion.php";
 
 // Incluye el archivo func-validar-sesion.php
-include "php/func-validar-sesion.php";
+include "models/ValidarSesion.php";
 
 // Establecer una variable para errores
 $errors = [];
@@ -132,10 +132,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <a class="nav-link active" aria-current="page" href="index.php">Tienda</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="contacto.php">Contacto</a>
+                        <a class="nav-link" href="views/Contacto.php">Contacto</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="sobre-nosotros.php">Sobre Nosotros</a>
+                        <a class="nav-link" href="views/SobreNosotros.php">Sobre Nosotros</a>
                     </li>
                     <?php if (isset($_SESSION['user_id'])) { ?>
                         <li class="nav-item">

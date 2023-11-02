@@ -2,26 +2,39 @@
 session_start();
 
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_email'])) {
-    header("Location: login.php");
+    header("Location: views/Login.php");
     exit;
 }
 
 if (!isset($_GET['id'])) {
-    header("Location: admin.php");
+    header("Location: views/MenuAdministrador.php");
     exit;
 }
 
 $id = $_GET['id'];
 
-include "db_conexion.php";
-include "php/func-libro.php";
-include "php/func-categoria.php";
-include "php/func-autor.php";
-include "php/func-subir-archivo.php";
+# Conexión con la base de datos
+include "config/db_conexion.php";
 
-$categorias = get_all_categories($conn);
-$autores = get_all_authors($conn);
-$book = get_book($conn, $id);
+# Incluye la clase del modelo
+include "models/Libro.php";
+$libroModel = new Libro();
+$libros = $libroModel->get_all_books($conn, 'ASC');
+
+# Incluye la clase del modelo
+include "models/Autor.php";
+$autorModel = new Autor($conn);
+$autores = $autorModel->getAuthors();
+
+# Incluye la clase del modelo
+include "models/Categoria.php";
+$categoriaModel = new Categoria($conn);
+$categorias = $categoriaModel->getCategories();
+
+# Incluye la ubicación para subir portadas
+include "models/AddCover.php";
+
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $titulo_libro = $_POST['book_title'];
@@ -110,7 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <a class="nav-link" href="anadir-autor.php">Añadir Autor</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="logout.php">Cerrar Sesión</a>
+                            <a class="nav-link" href="controller/LogoutControlador.php">Cerrar Sesión</a>
                         </li>
                     </ul>
                 </div>
