@@ -7,12 +7,17 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_email'])) {
 }
 
 include "db_conexion.php";
-include "php/func-categoria.php";
-include "php/func-autor.php";
 include "php/func-subir-archivo.php";
 
-$categorias = get_all_categories($conn);
-$autores = get_all_authors($conn);
+# Incluye la clase del modelo
+include "models/Autor.php";
+$autorModel = new Autor($conn);
+$autores = $autorModel->getAuthors();
+
+# Incluye la clase del modelo
+include "models/Categoria.php";
+$categoriaModel = new Categoria($conn);
+$categorias = $categoriaModel->getCategories();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $titulo_libro = $_POST['book_title'];
@@ -80,13 +85,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <a class="nav-link" aria-current="page" href="index.php">Tienda</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="anadir-libro.php">Añadir Libro</a>
+                            <a class="nav-link" disabled>Añadir Libro</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="anadir-categoria.php">Añadir Categoría</a>
+                            <a class="nav-link" href="views/AnadirCategoria.php">Añadir Categoría</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="anadir-autor.php">Añadir Autor</a>
+                            <a class="nav-link" href="views/AnadirAutor.php">Añadir Autor</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="logout.php">Cerrar Sesión</a>

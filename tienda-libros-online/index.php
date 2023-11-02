@@ -72,7 +72,7 @@ $priceAverages = $stmtPriceAverage->fetchAll(PDO::FETCH_ASSOC);
 $adminLink = '';
 $userLink = '';
 $loginLink = '<li class="nav-item">
-                <a class="nav-link" href="registro.php">Registro</a>
+                <a class="nav-link" href="views/RegistroUsuarioFormulario.php">Registro</a>
             </li>';
 $loginLink .= '<li class="nav-item">
                 <a class="nav-link" href="login.php">Login</a>
@@ -84,13 +84,13 @@ if (isset($_SESSION['user_id'])) {
     if (esAdmin($_SESSION['user_id'], $conn)) {
         // El usuario logueado es un administrador
         $adminLink = '<li class="nav-item">
-                        <a class="nav-link" href="admin.php">Admin</a>
+                        <a class="nav-link" href="views/MenuAdministrador.php">Admin</a>
                     </li>';
         $loginLink = '<li class="nav-item">
                         <a class="nav-link" href="logout.php">Cerrar Sesión</a>
                     </li>';
     } else {
-        // El usuario logueado no es administrador; es un usuario registrado a través de registro.php
+        // El usuario logueado no es administrador; es un usuario registrado a través de RegistroUsuarioFormulario-usuario.php
         $userName = obtenerNombreDeUsuario($_SESSION['user_id'], $conn);
         $userLink = "<li class='nav-item'>
                         <a class='nav-link'>$userName</a>
@@ -117,7 +117,7 @@ if (isset($_SESSION['user_id'])) {
 <div class="container">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
-            <a class="navbar-brand" href="index.php">Libros Online</a>
+            <a class="navbar-brand">Libros Online</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -127,10 +127,10 @@ if (isset($_SESSION['user_id'])) {
                     <a class="nav-link active" aria-current="page" href="index.php">Tienda</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="contacto.php">Contacto</a>
+                    <a class="nav-link" href="views/Contacto.php">Contacto</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="sobre-nosotros.php">Sobre Nosotros</a>
+                    <a class="nav-link" href="views/SobreNosotros.php">Sobre Nosotros</a>
                 </li>
                 <?= $adminLink ?>
                 <?= $userLink ?>

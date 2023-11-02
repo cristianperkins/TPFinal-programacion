@@ -1,31 +1,26 @@
 <?php
+include "../models/Categoria.php"; // Añade esta línea para incluir la clase Categoria
+
 session_start();
 
-# Si el administrador está autenticado
 if (isset($_SESSION['user_id']) && isset($_SESSION['user_email'])) {
-    
-    # Si el ID de la categoría no está definido
-    if (!isset($_GET['id'])) {
-        # Redirigir a la página admin.php
-        header("Location: admin.php");
+    if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
+        header("Location: MenuAdministrador.php");
         exit;
     }
-
     $id = $_GET['id'];
-
-    # Archivo de Conexión a la Base de Datos
-    include "db_conexion.php";
-
-    # Función auxiliar para categorías
-    include "php/func-categoria.php";
-    $categoria = get_category($conn, $id);
-    
-    # Si el ID es inválido
+    include "../db_conexion.php";
+    $categoriaModel = new Categoria($conn); // Utiliza el objeto de la clase Categoria
+    $categoria = $categoriaModel->getCategoryById($id);
     if ($categoria === null) {
-        # Redirigir a la página admin.php
-        header("Location: admin.php");
+        header("Location: MenuAdministrador.php");
         exit;
     }
+    // Aquí puedes mostrar el formulario de edición de la categoría
+} else {
+    header("Location: ../login.php");
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -39,39 +34,39 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_email'])) {
     <!-- Enlace al DataTables CSS -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.10/css/jquery.dataTables.css">
     <!-- Enlace al archivo CSS personalizado -->
-    <link href="css/estilos-admin.css" rel="stylesheet">
+    <link href="../css/estilos-admin.css" rel="stylesheet">
 </head>
 <body>
     <div class="container">
         <!-- Barra de navegación del admin -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="admin.php">Admin</a>
+                <a class="navbar-brand" href="MenuAdministrador.php">Admin</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="index.php">Tienda</a>
+                            <a class="nav-link" aria-current="page" href="../index.php">Tienda</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="anadir-libro.php">Añadir Libro</a>
+                            <a class="nav-link" href="../anadir-libro.php">Añadir Libro</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link disabled" href="anadir-categoria.php">Añadir Categoría</a>
+                            <a class="nav-link disabled" href="#">Añadir Categoría</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="anadir-autor.php">Añadir Autor</a>
+                            <a class="nav-link" href="AnadirAutor.php">Añadir Autor</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="logout.php">Cerrar Sesión</a>
+                            <a class="nav-link" href="../logout.php">Cerrar Sesión</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
-        <form action="php/func-editar-categoria.php" method="post" class="shadow p-4 rounded mt-5" style="width: 90%; max-width: 50rem;">
+        <form action="../controller/EditarCategoriaControlador.php" method="post" class="shadow p-4 rounded mt-5" style="width: 90%; max-width: 50rem;">
             <h1 class="text-center pb-5 display-4 fs-3">
                 Editar Categoría
             </h1>
@@ -96,8 +91,3 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_email'])) {
     </div>
 </body>
 </html>
-
-<?php } else {
-    header("Location: login.php");
-    exit;
-} ?>

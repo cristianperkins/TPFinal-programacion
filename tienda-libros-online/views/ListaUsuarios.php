@@ -3,12 +3,15 @@ session_start();
 
 // Verificamos la autenticación del usuario
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_email'])) {
-    header("Location: login.php");
+    header("Location: ../login.php");
     exit;
 }
 
 # Conexión con la base de datos
-include "db_conexion.php";
+include "../db_conexion.php";
+
+# Incluye el modelo Usuarios
+include "../models/UsuarioConsultas.php";
 
 // Variable para almacenar el mensaje de éxito si existe
 $successMessage = "";
@@ -18,14 +21,11 @@ if (isset($_GET['success']) && !empty($_GET['success'])) {
     $successMessage = $_GET['success'];
 }
 
-# Realiza la consulta para obtener la lista de usuarios
-$sql = "SELECT * FROM usuarios";
-$result = $conn->query($sql);
+# Crea una instancia del modelo Usuarios
+$modeloUsuarios = new Usuarios($conn);
 
-$usuarios = [];
-if ($result) {
-    $usuarios = $result->fetchAll(PDO::FETCH_ASSOC);
-}
+# Realiza la consulta para obtener la lista de usuarios
+$usuarios = $modeloUsuarios->obtenerUsuarios();
 ?>
 
 <!DOCTYPE html>
@@ -39,36 +39,36 @@ if ($result) {
     <!-- Enlace al DataTables CSS -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.10/css/jquery.dataTables.css">
     <!-- Enlace al archivo CSS personalizado -->
-    <link href="css/estilos-admin.css" rel="stylesheet">
+    <link href="../css/estilos-admin.css" rel="stylesheet">
 </head>
 <body>
     <div class="container">
         <!-- Barra de navegación para la lista de usuarios -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="admin.php">Admin</a>
+                <a class="navbar-brand" href="MenuAdministrador.php">Admin</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="index.php">Tienda</a>
+                            <a class="nav-link" href="../index.php">Tienda</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="anadir-libro.php">Añadir Libro</a>
+                            <a class="nav-link" href="../anadir-libro.php">Añadir Libro</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="anadir-categoria.php">Añadir Categoría</a>
+                            <a class="nav-link" href="AnadirCategoria.php">Añadir Categoría</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="anadir-autor.php">Añadir Autor</a>
+                            <a class="nav-link" href="AnadirAutor.php">Añadir Autor</a>
                         </li>
                         <li class "nav-item">
-                            <a class="nav-link disabled" href="lista-usuarios.php">Lista de Usuarios</a>
+                            <a class="nav-link disabled" href="ListaUsuarios.php">Lista de Usuarios</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="logout.php">Cerrar Sesión</a>
+                            <a class="nav-link" href="../logout.php">Cerrar Sesión</a>
                         </li>
                     </ul>
                 </div>
@@ -105,15 +105,15 @@ if ($result) {
                     <td><?php echo $usuario['telefono']; ?></td>
                     <td>
                         <!-- Agrega enlaces para eliminar usuarios -->
-                        <a href="php/func-eliminar-usuario.php?id=<?= $usuario['id'] ?>" class="btn btn-danger">Eliminar</a>
+                        <a href="../controller/EliminarUsuarios.php?id=<?= $usuario['id'] ?>" class="btn btn-danger">Eliminar</a>
                     </td>
                 </tr>
             <?php } ?>
             </tbody>
-            </table>
+        </table>
+    </div>
 
-<!-- Incluye el archivo JavaScript de Bootstrap al final del body para mejorar el rendimiento si es necesario -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-</div>
+    <!-- Incluye el archivo JavaScript de Bootstrap al final del body para mejorar el rendimiento si es necesario -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -47,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $user_email = $user['email'];
             $_SESSION['user_id'] = $user_id;
             $_SESSION['user_email'] = $user_email;
-            header("Location: ../admin.php");
+            header("Location: ../views/MenuAdministrador.php");
             exit;
         } else {
             // Si el Email no se encuentra en la base de datos de administradores, verifica si es un usuario registrado
@@ -58,6 +58,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($stmt->rowCount() === 1) {
                 // Si el Email se encuentra en la base de datos de usuarios registrados, verifica la contraseña
                 $user = $stmt->fetch();
+                echo 'Contraseña ingresada: ' . $password . '<br>';
+                echo 'Hash almacenado en la base de datos: ' . $user['contrasena'] . '<br>';
                 if (password_verify($password, $user['contrasena'])) {
                     session_start();
                     $_SESSION['user_id'] = $user['id'];

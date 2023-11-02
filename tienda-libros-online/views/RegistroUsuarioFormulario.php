@@ -1,64 +1,26 @@
 <?php
-require('db_conexion.php');
-$errors = array();
+require('../db_conexion.php');
+require('../models/UsuarioConsultas.php'); 
+require('../controller/RegistroUsuarios.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nombreUsuario = $_POST['username'];
     $correoElectronico = $_POST['email'];
     $confirmEmail = $_POST['confirm-email'];
-    $contrasena = password_hash($_POST['password'], PASSWORD_BCRYPT);
+    $contrasena = $_POST['password'];
     $fechaNacimiento = $_POST['birthdate'];
     $telefono = $_POST['phone'];
 
-    if (empty($nombreUsuario) || empty($correoElectronico) || empty($confirmEmail) || empty($contrasena) || empty($fechaNacimiento) || empty($telefono)) {
-        $errors[] = "No puedes dejar los campos vacíos, por favor ingresa los datos requeridos.";
-    }
+    
+    $registroUsuarios = new RegistroUsuarios($conn); 
+    $resultado = $registroUsuarios->registrarUsuario($nombreUsuario, $correoElectronico, $confirmEmail, $contrasena, $fechaNacimiento, $telefono);
 
-    if (!preg_match('/^[a-zA-Z][a-zA-Z0-9_]*$/', $nombreUsuario) || preg_match('/^[0-9]/', $nombreUsuario)) {
-        $errors[] = "El nombre de usuario no puede contener símbolos ni comenzar con números.";
-    }
-
-    if (!filter_var($correoElectronico, FILTER_VALIDATE_EMAIL)) {
-        $errors[] = "El correo electrónico no es válido.";
-    }
-
-    if ($correoElectronico !== $confirmEmail) {
-        $errors[] = "La confirmación de correo electrónico no coincide con el correo electrónico.";
-    }
-
-    $anioNacimiento = date('Y', strtotime($fechaNacimiento));
-    $anioActual = date('Y');
-    $edad = $anioActual - $anioNacimiento;
-
-    if ($anioNacimiento < 1915 || $anioNacimiento > 2023) {
-        $errors[] = "Selecciona una fecha de nacimiento válida.";
-    } else if ($edad < 18) {
-        $errors[] = "Eres menor de edad, no tienes permitido crear una cuenta.";
-    }
-
-    if (!preg_match('/^\d{10,}$/', $telefono)) {
-        $errors[] = "Ingresa un número de teléfono válido (al menos 10 dígitos numéricos).";
-    }
-
-    if (empty($errors)) {
-        try {
-            // Prepararo la consulta para insertar el usuario en la base de datos
-            $stmt = $conn->prepare('INSERT INTO usuarios (nombre_usuario, correo_electronico, contrasena, fecha_nacimiento, telefono) VALUES (:nombreUsuario, :correoElectronico, :contrasena, :fechaNacimiento, :telefono)');
-            $stmt->bindParam(':nombreUsuario', $nombreUsuario);
-            $stmt->bindParam(':correoElectronico', $correoElectronico);
-            $stmt->bindParam(':contrasena', $contrasena);
-            $stmt->bindParam(':fechaNacimiento', $fechaNacimiento);
-            $stmt->bindParam(':telefono', $telefono);
-            $stmt->execute();
-
-            // Regresamos  al usuario a index.php después del registro exitoso
-            header('Location: index.php');
-
-            // Exit para detener la ejecución después de la redirección
-            exit();
-        } catch (PDOException $e) {
-            $errors[] = "Error al registrar usuario: " . $e->getMessage();
-        }
+    if (is_array($resultado)) {
+        $errors = $resultado; // Si el resultado es un array, asumimos que son errores
+    } else {
+        // El registro fue exitoso, puedes redirigir o mostrar un mensaje de éxito
+        header('Location: ../index.php');
+        exit();
     }
 }
 ?>
@@ -76,20 +38,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div class="container">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
-            <a class="navbar-brand" href="index.php">Libros Online</a>
+            <a class="navbar-brand" href="../index.php">Libros Online</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="index.php">Tienda</a>
+                    <a class="nav-link active" aria-current="page" href="../index.php">Tienda</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="contacto.php">Contacto</a>
+                        <a class="nav-link" href="../contacto.php">Contacto</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="sobre-nosotros.php">Sobre Nosotros</a>
+                        <a class="nav-link" href="../sobre-nosotros.php">Sobre Nosotros</a>
                     </li>
                 </ul>
             </div>
@@ -159,7 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </div>
 <script>
    function redirigirAIndex() {
-        window.location.href = 'index.php';
+        window.location.href = '../index.php';
     }
 
     function mostrarAlert(nombreUsuario) {

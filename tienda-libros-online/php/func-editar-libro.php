@@ -47,7 +47,7 @@ class GestorLibro {
     }
 
     public function redirigiraAdmin() {
-        header("Location: ../admin.php");
+        header("Location: ../viewsMenuAdministrador.php");
         exit;
     }
 }

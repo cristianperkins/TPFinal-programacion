@@ -8,19 +8,23 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_email'])) {
 }
 
 # Conexión con la base de datos
-include "db_conexion.php";
+include "../db_conexion.php";
 
-# Incluir la función de los libros
-include "php/func-libro.php";
-$libros = get_all_books($conn, 'ASC');
+# Incluye la clase del modelo
+include "../models/Libro.php";
+$libroModel = new Libro();
+$libros = $libroModel->get_all_books($conn, 'ASC');
 
-# Incluir la función de los autores
-include "php/func-autor.php";
-$autores = get_all_authors($conn);
+# Incluye la clase del modelo
+include "../models/Autor.php";
+$autorModel = new Autor($conn);
+$autores = $autorModel->getAuthors();
 
-# Incluir la función de las categorías
-include "php/func-categoria.php";
-$categorias = get_all_categories($conn);
+# Incluye la clase del modelo
+include "../models/Categoria.php";
+$categoriaModel = new Categoria($conn);
+$categorias = $categoriaModel->getCategories();
+
 ?>
 
 <!DOCTYPE html>
@@ -34,36 +38,36 @@ $categorias = get_all_categories($conn);
     <!-- Enlace al DataTables CSS -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.10/css/jquery.dataTables.css">
     <!-- Enlace al archivo CSS personalizado -->
-    <link href="css/estilos-admin.css" rel="stylesheet">
+    <link href="../css/estilos-admin.css" rel="stylesheet">
 </head>
 <body>
     <div class="container">
         <!-- Barra de navegación del admin -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="admin.php">Admin</a>
+                <a class="navbar-brand" href="MenuAdministrador.php">Admin</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="index.php">Tienda</a>
+                            <a class="nav-link" aria-current="page" href="../index.php">Tienda</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="anadir-libro.php">Añadir Libro</a>
+                            <a class="nav-link" href="../anadir-libro.php">Añadir Libro</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="anadir-categoria.php">Añadir Categoría</a>
+                            <a class="nav-link" href="AnadirCategoria.php">Añadir Categoría</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="anadir-autor.php">Añadir Autor</a>
+                            <a class="nav-link" href="AnadirAutor.php">Añadir Autor</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="lista-usuarios.php">Lista de Usuarios</a> <!-- Creación de página para mostrar lista de usuarios -->
+                            <a class="nav-link" href="ListaUsuarios.php">Lista de Usuarios</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="logout.php">Cerrar Sesión</a>
+                            <a class="nav-link" href="../logout.php">Cerrar Sesión</a>
                         </li>
                     </ul>
                 </div>
@@ -92,7 +96,7 @@ $categorias = get_all_categories($conn);
                 <tr>
                     <td><?= $libro->id ?></td>
                     <td>
-                        <img width="100" src="archivos/cover/<?= $libro->portada ?>">
+                        <img width="100" src="../archivos/cover/<?= $libro->portada ?>">
                     </td>
                     <td><?= htmlspecialchars($libro->titulo) ?></td>
                     <td>
@@ -124,8 +128,8 @@ $categorias = get_all_categories($conn);
                     <td><?= $libro->fecha_publicacion ?></td> <!-- Muestra la Fecha de Publicación -->
                     <td>
                         <div class="btn-group">
-                            <a href="editar-libro.php?id=<?= $libro->id ?>" class="btn btn-warning" style="margin-right: 5px;">Editar</a>
-                            <form action="php/func-eliminar-libro.php" method="post">
+                            <a href="../editar-libro.php?id=<?= $libro->id ?>" class="btn btn-warning" style="margin-right: 5px;">Editar</a>
+                            <form action="controller/EliminarLibroControlador.php" method="post">
                                 <input type="hidden" name="libro_id" value="<?= $libro->id ?>">
                                 <button type="submit" class="btn btn-danger">Eliminar</button>
                             </form>
@@ -152,8 +156,8 @@ $categorias = get_all_categories($conn);
                         <td><?= $categoria->id ?></td>
                         <td><?= htmlspecialchars($categoria->nombre) ?></td>
                         <td>
-                            <a href="editar-categoria.php?id=<?= $categoria->id ?>" class="btn btn-warning">Editar</a>
-                            <a href="php/func-eliminar-categoria.php?id=<?= $categoria->id ?>" class="btn btn-danger">Eliminar</a>
+                            <a href="EditarCategoriaFormulario.php?id=<?= $categoria->id ?>" class="btn btn-warning">Editar</a>
+                            <a href="../controller/EliminarCategoriaControlador.php?id=<?= $categoria->id ?>" class="btn btn-danger">Eliminar</a>
                         </td>
                     </tr>
                 <?php } ?>
@@ -177,8 +181,8 @@ $categorias = get_all_categories($conn);
                         <td><?= $autor->id ?></td>
                         <td><?= htmlspecialchars($autor->nombre . ' ' . $autor->apellido) ?></td>
                         <td>
-                            <a href="editar-autor.php?id=<?=$autor->id ?>" class="btn btn-warning">Editar</a>
-                            <a href="php/func-eliminar-autor.php?id=<?= $autor->id ?>" class="btn btn-danger">Eliminar</a>
+                            <a href="EditarAutorFormulario.php?id=<?=$autor->id ?>" class="btn btn-warning">Editar</a>
+                            <a href="../controller/EliminarAutorControlador.php?id=<?= $autor->id ?>" class="btn btn-danger">Eliminar</a>
                         </td>
                     </tr>
                 <?php } ?>
