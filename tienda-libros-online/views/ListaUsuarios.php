@@ -3,12 +3,12 @@ session_start();
 
 // Verificamos la autenticación del usuario
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_email'])) {
-    header("Location: ../login.php");
+    header("Location: Login.php");
     exit;
 }
 
 # Conexión con la base de datos
-include "../db_conexion.php";
+include "../config/db_conexion.php";
 
 # Incluye el modelo Usuarios
 include "../models/UsuarioConsultas.php";
@@ -68,7 +68,7 @@ $usuarios = $modeloUsuarios->obtenerUsuarios();
                             <a class="nav-link disabled" href="ListaUsuarios.php">Lista de Usuarios</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="../logout.php">Cerrar Sesión</a>
+                            <a class="nav-link" href="../controller/LogoutControlador.php">Cerrar Sesión</a>
                         </li>
                     </ul>
                 </div>

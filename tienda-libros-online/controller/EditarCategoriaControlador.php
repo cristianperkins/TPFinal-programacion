@@ -1,6 +1,6 @@
 <?php
 session_start();
-include "../db_conexion.php";
+include "../config/db_conexion.php";
 include "../models/EditarCategoria.php"; // Requiere el modelo
 $categoriaModel = new CategoriaModel($conn);
 
@@ -18,7 +18,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_email'])) {
         exit;
     }
 } else {
-    header("Location: ../login.php");
+    header("Location: ../views/Login.php");
     exit;
 }
 ?>

@@ -26,16 +26,16 @@
                             <a class="nav-link" aria-current="page" href="../index.php">Tienda</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="../anadir-libro.php">Añadir Libro</a>
+                            <a class="nav-link" href="AnadirLibro.php">Añadir Libro</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="AnadirCategoria.php">Añadir Categoría</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" disabled href="#">Añadir Autor</a>
+                            <a class="nav-link" disabled>Añadir Autor</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="../logout.php">Cerrar Sesión</a>
+                            <a class="nav-link" href="../controller/LogoutControlador.php">Cerrar Sesión</a>
                         </li>
                     </ul>
                 </div>

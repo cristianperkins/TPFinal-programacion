@@ -3,12 +3,12 @@ session_start();
 
 // Verificamos la autenticación del usuario
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_email'])) {
-    header("Location: login.php");
+    header("Location: Login.php");
     exit;
 }
 
 # Conexión con la base de datos
-include "../db_conexion.php";
+include "../config/db_conexion.php";
 
 # Incluye la clase del modelo
 include "../models/Libro.php";
@@ -55,7 +55,7 @@ $categorias = $categoriaModel->getCategories();
                             <a class="nav-link" aria-current="page" href="../index.php">Tienda</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="../anadir-libro.php">Añadir Libro</a>
+                            <a class="nav-link" href="AnadirLibro.php">Añadir Libro</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="AnadirCategoria.php">Añadir Categoría</a>
@@ -67,7 +67,7 @@ $categorias = $categoriaModel->getCategories();
                             <a class="nav-link" href="ListaUsuarios.php">Lista de Usuarios</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="../logout.php">Cerrar Sesión</a>
+                            <a class="nav-link" href="../controller/LogoutControlador.php">Cerrar Sesión</a>
                         </li>
                     </ul>
                 </div>
@@ -128,8 +128,8 @@ $categorias = $categoriaModel->getCategories();
                     <td><?= $libro->fecha_publicacion ?></td> <!-- Muestra la Fecha de Publicación -->
                     <td>
                         <div class="btn-group">
-                            <a href="../editar-libro.php?id=<?= $libro->id ?>" class="btn btn-warning" style="margin-right: 5px;">Editar</a>
-                            <form action="controller/EliminarLibroControlador.php" method="post">
+                            <a href="EditarLibro.php?id=<?= $libro->id ?>" class="btn btn-warning" style="margin-right: 5px;">Editar</a>
+                            <form action="../controller/EliminarLibroControlador.php" method="post">
                                 <input type="hidden" name="libro_id" value="<?= $libro->id ?>">
                                 <button type="submit" class="btn btn-danger">Eliminar</button>
                             </form>

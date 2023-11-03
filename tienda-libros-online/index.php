@@ -1,105 +1,44 @@
 <?php
+# Inicia la sesión
 session_start();
 
-# Conexión a la base de datos
-include "db_conexion.php";
+# Incluye la conexión a la base de datos
+include "config/db_conexion.php";
 
+# Inicializa $books como un array vacío
+$books = [];
 
+# Incluye la clase IndexSQL
+include "models/IndexSQL.php";
 
-# Recuperar todas las categorías y autores de la base de datos
-$queryCategories = "SELECT * FROM categorias";
-$stmtCategories = $conn->query($queryCategories);
-$categories = $stmtCategories->fetchAll(PDO::FETCH_ASSOC);
+# Crea una instancia de la clase IndexSQL
+$indexSQL = new IndexSQL($conn);
 
-$queryAuthors = "SELECT * FROM autor";
-$stmtAuthors = $conn->query($queryAuthors);
-$authors = $stmtAuthors->fetchAll(PDO::FETCH_ASSOC);
+# Obtiene las categorías de la base de datos
+$categories = $indexSQL->getCategories();
+
+# Obtiene los autores de la base de datos
+$authors = $indexSQL->getAuthors();
 
 # Variables para filtrar libros
 $selectedCategory = isset($_GET['category']) ? $_GET['category'] : null;
 $selectedAuthor = isset($_GET['author']) ? $_GET['author'] : null;
 
-# Podemos realizar una búsqueda si se ha proporcionado una palabra clave
+# Verifica si se proporcionó una palabra clave para la búsqueda
 if (isset($_GET['search'])) {
     $search = $_GET['search'];
-    $query = "SELECT libros.id, libros.titulo, libros.descripcion, libros.portada, autor.nombre AS autor_nombre, autor.apellido AS autor_apellido, categorias.nombre AS categoria, libros.precio, libros.fecha_publicacion
-              FROM libros
-              INNER JOIN autor ON libros.autor_id = autor.id
-              INNER JOIN categorias ON libros.categoria_id = categorias.id
-              WHERE libros.titulo LIKE :search
-              OR autor.nombre LIKE :search
-              OR autor.apellido LIKE :search
-              OR categorias.nombre LIKE :search";
-    $stmt = $conn->prepare($query);
-    $stmt->bindValue(':search', '%' . $search . '%', PDO::PARAM_STR);
-    $stmt->execute();
-    $books = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $books = $indexSQL->searchBooks($search);
 } else {
-    # Si no se proporciona una palabra clave, mostrar todos los libros o aplicar filtros
-    $query = "SELECT libros.id, libros.titulo, libros.descripcion, libros.portada, autor.nombre AS autor_nombre, autor.apellido AS autor_apellido, categorias.nombre AS categoria, libros.precio, libros.fecha_publicacion
-              FROM libros
-              INNER JOIN autor ON libros.autor_id = autor.id
-              INNER JOIN categorias ON libros.categoria_id = categorias.id";
-
-    if ($selectedCategory) {
-        $query .= " WHERE libros.categoria_id = :category";
-    } elseif ($selectedAuthor) {
-        $query .= " WHERE libros.autor_id = :author";
-    }
-
-    $stmt = $conn->prepare($query);
-
-    if ($selectedCategory) {
-        $stmt->bindParam(':category', $selectedCategory, PDO::PARAM_INT);
-    } elseif ($selectedAuthor) {
-        $stmt->bindParam(':author', $selectedAuthor, PDO::PARAM_INT);
-    }
-
-    $stmt->execute();
-    $books = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    # Si no se proporciona una palabra clave, muestra todos los libros o aplica filtros
+    $books = $indexSQL->getBooks($selectedCategory, $selectedAuthor);
 }
 
-# Agregar consulta para el precio promedio por categoría
+# Incluye el controlador de autenticación de usuario
+include "controller/AutenticadorUsuarioControlador.php";
 
-$queryPriceAverage = "SELECT c.nombre AS categoria, AVG(l.precio) AS precio_promedio
-                    FROM libros l
-                    INNER JOIN categorias c ON l.categoria_id = c.id
-                    GROUP BY c.nombre";
-$stmtPriceAverage = $conn->query($queryPriceAverage);
-$priceAverages = $stmtPriceAverage->fetchAll(PDO::FETCH_ASSOC);
+# Obtiene el precio promedio de los libros por categoría
+$priceAverages = $indexSQL->getPriceAverages();
 
-# Inicializamos las variables $adminLink y $loginLink como cadenas vacías
-$adminLink = '';
-$userLink = '';
-$loginLink = '<li class="nav-item">
-                <a class="nav-link" href="views/RegistroUsuarioFormulario.php">Registro</a>
-            </li>';
-$loginLink .= '<li class="nav-item">
-                <a class="nav-link" href="login.php">Login</a>
-            </li>';
-
-if (isset($_SESSION['user_id'])) {
-    include "php/func-validar-sesion.php";
-
-    if (esAdmin($_SESSION['user_id'], $conn)) {
-        // El usuario logueado es un administrador
-        $adminLink = '<li class="nav-item">
-                        <a class="nav-link" href="views/MenuAdministrador.php">Admin</a>
-                    </li>';
-        $loginLink = '<li class="nav-item">
-                        <a class="nav-link" href="logout.php">Cerrar Sesión</a>
-                    </li>';
-    } else {
-        // El usuario logueado no es administrador; es un usuario registrado a través de RegistroUsuarioFormulario-usuario.php
-        $userName = obtenerNombreDeUsuario($_SESSION['user_id'], $conn);
-        $userLink = "<li class='nav-item'>
-                        <a class='nav-link'>$userName</a>
-                    </li>";
-        $loginLink = '<li class="nav-item">
-                        <a class="nav-link" href="logout.php">Cerrar Sesión</a>
-                    </li>';
-    }
-}
 
 ?>
 
@@ -189,7 +128,7 @@ if (isset($_SESSION['user_id'])) {
                                 </p>
                                 <div class="d-flex justify-content-end">
                                     <button type="button" class="btn btn-warning">
-                                        <a href="compra.php?book_id=<?= $book['id'] ?>" style="text-decoration: none; color: white;">Comprar</a>
+                                        <a href="views/FormularioCompra.php?book_id=<?= $book['id'] ?>" style="text-decoration: none; color: white;">Comprar</a>
                                     </button>
                                 </div>
                             </div>

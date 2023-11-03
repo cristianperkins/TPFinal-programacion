@@ -2,8 +2,8 @@
 session_start();
 if (isset($_SESSION['user_id']) && isset($_SESSION['user_email'])) {
     if (isset($_POST['nombre_autor']) && isset($_POST['apellido_autor']) && isset($_POST['autor_id'])) {
-        include "../db_conexion.php";
-        include "../models/EditarAutor.php"; // Requiere el modelo
+        include "../config/db_conexion.php";
+        include "../models/EditarAutor.php";
         $autorModel = new AutorEditor($conn);
         $errorOrSuccessMsg = $autorModel->updateAuthor($_POST['nombre_autor'], $_POST['apellido_autor'], $_POST['autor_id']);
         if (strpos($errorOrSuccessMsg, 'Error') !== false) {
@@ -17,7 +17,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_email'])) {
         exit;
     }
 } else {
-    header("Location: ../login.php");
+    header("Location: ../views/Login.php");
     exit;
 }
 ?>

@@ -7,7 +7,7 @@
 
     <!-- Enlace al archivo CSS de Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link href="css/estilos-index-login.css" rel="stylesheet">
+    <link href="../css/estilos-index-login.css" rel="stylesheet">
 </head>
 <body>
     <div class="d-flex justify-content-center 
@@ -15,7 +15,7 @@
         <form class="p-5 rounded shadow-lg" 
             style="max-width: 30rem; width: 100%" 
             method="POST" 
-            action="php/autentificacion.php">
+            action="../controller/ControladorAutentificacion.php">
 
             <h1 class="text-center display-4 pb-5">Login</h1>
             <?php if(isset($_GET['error'])){ ?>
@@ -45,7 +45,7 @@
             </div>
 
             <button type="submit" class="btn btn-primary">Login</button>
-            <a href="index.php" 
+            <a href="../index.php" 
              class="btn btn-link">
              Tienda</a>
         </form>

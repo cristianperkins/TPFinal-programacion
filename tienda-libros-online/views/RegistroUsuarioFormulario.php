@@ -1,28 +1,8 @@
 <?php
-require('../db_conexion.php');
+require('../config/db_conexion.php');
 require('../models/UsuarioConsultas.php'); 
-require('../controller/RegistroUsuarios.php');
+require('../controller/RegistroUsuariosControlador.php');
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nombreUsuario = $_POST['username'];
-    $correoElectronico = $_POST['email'];
-    $confirmEmail = $_POST['confirm-email'];
-    $contrasena = $_POST['password'];
-    $fechaNacimiento = $_POST['birthdate'];
-    $telefono = $_POST['phone'];
-
-    
-    $registroUsuarios = new RegistroUsuarios($conn); 
-    $resultado = $registroUsuarios->registrarUsuario($nombreUsuario, $correoElectronico, $confirmEmail, $contrasena, $fechaNacimiento, $telefono);
-
-    if (is_array($resultado)) {
-        $errors = $resultado; // Si el resultado es un array, asumimos que son errores
-    } else {
-        // El registro fue exitoso, puedes redirigir o mostrar un mensaje de éxito
-        header('Location: ../index.php');
-        exit();
-    }
-}
 ?>
 
 <!DOCTYPE html>
@@ -121,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </div>
 <script>
    function redirigirAIndex() {
-        window.location.href = '../index.php';
+        window.location.href = 'index.php';
     }
 
     function mostrarAlert(nombreUsuario) {

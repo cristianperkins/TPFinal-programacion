@@ -3,12 +3,12 @@ session_start();
 
 # Verificamos la autenticación del usuario
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_email'])) {
-    header("Location: ../login.php");
+    header("Location: ../views/Login.phpp");
     exit;
 }
 
 # Incluye el archivo de conexión a la base de datos
-include "../db_conexion.php";
+include "../config/db_conexion.php";
 
 # Verifica si se proporciona el ID del usuario a eliminar
 if (isset($_GET['id'])) {

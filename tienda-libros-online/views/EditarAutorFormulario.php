@@ -15,7 +15,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_email'])) {
     $id = $_GET['id'];
 
     # Archivo de Conexión a la Base de Datos
-    include "../db_conexion.php";
+    include "../config/db_conexion.php";
 
   
     $autorModel = new Autor($conn);
@@ -30,7 +30,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_email'])) {
         exit;
     }
 } else {
-    header("Location: ../login.php");
+    header("Location: Login.php");
     exit;
 }
 ?>
@@ -72,7 +72,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_email'])) {
                             <a class="nav-link disabled" href="AnadirAutor.php">Añadir Autor</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="../logout.php">Cerrar Sesión</a>
+                            <a class="nav-link" href="../controller/LogoutControlador.php">Cerrar Sesión</a>
                         </li>
                     </ul>
                 </div>

@@ -3,7 +3,7 @@ session_start();
 
 // Verificamos la autenticación del usuario
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_email'])) {
-    header("Location: login.php");
+    header("Location: Login.php");
     exit;
 }
 ?>
@@ -37,16 +37,16 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_email'])) {
                             <a class="nav-link" aria-current="page" href="index.php">Tienda</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="../anadir-libro.php">Añadir Libro</a>
+                            <a class="nav-link" href="AnadirLibro.php">Añadir Libro</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" disabled href="#">Añadir Categoría</a>
+                            <a class="nav-link" disabled>Añadir Categoría</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="AnadirAutor.php">Añadir Autor</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="../logout.php">Cerrar Sesión</a>
+                            <a class="nav-link" href="../controller/LogoutControlador.php">Cerrar Sesión</a>
                         </li>
                     </ul>
                 </div>

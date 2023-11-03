@@ -1,4 +1,5 @@
 <?php
+
 function subir_archivo($archivo, $directorio_destino) {
     $nombre_archivo = $archivo['name'];
     $nombre_temporal = $archivo['tmp_name'];
@@ -13,7 +14,9 @@ function subir_archivo($archivo, $directorio_destino) {
 
         if (in_array($extension, $extensiones_permitidas)) {
             $nombre_archivo_final = uniqid("", true) . '.' . $extension;
-            $ruta_destino = $directorio_destino . '/' . $nombre_archivo_final;
+
+            // Utiliza una ruta relativa para retroceder un nivel y acceder a la carpeta de destino
+            $ruta_destino = '../' . $directorio_destino . '/' . $nombre_archivo_final;
             move_uploaded_file($nombre_temporal, $ruta_destino);
 
             $resultado_subida['estado'] = 'éxito';

@@ -3,7 +3,7 @@ session_start();
 
 // Verificamos la autenticación del usuario
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_email'])) {
-    header("Location: ../login.php");
+    header("Location: ../views/Login.php");
     exit;
 }
 

@@ -1,5 +1,5 @@
 <?php
-include '../db_conexion.php';
+include '../config/db_conexion.php';
 
 class AuthorManager {
     private $conn;

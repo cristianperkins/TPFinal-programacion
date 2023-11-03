@@ -2,76 +2,41 @@
 session_start();
 
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_email'])) {
-    header("Location: login.php");
+    header("Location: Login.php");
     exit;
 }
 
 if (!isset($_GET['id'])) {
-    header("Location: admin.php");
+    header("Location: MenuAdministrador.php");
     exit;
 }
 
 $id = $_GET['id'];
 
-include "db_conexion.php";
-include "php/func-libro.php";
-include "php/func-categoria.php";
-include "php/func-autor.php";
-include "php/func-subir-archivo.php";
+# Conexión con la base de datos
+include "../config/db_conexion.php";
 
-$categorias = get_all_categories($conn);
-$autores = get_all_authors($conn);
-$book = get_book($conn, $id);
+# Incluye la clase del modelo
+include "../models/Libro.php";
+$libroModel = new Libro();
+$libros = $libroModel->get_all_books($conn, 'ASC');
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $titulo_libro = $_POST['book_title'];
-    $descripcion_libro = $_POST['book_description'];
-    $id_autor = $_POST['book_author'];
-    $id_categoria = $_POST['book_category'];
-    $precio_libro = $_POST['book_price'];
-    $anio_publicacion = $_POST['book_year'];
+# Incluye la clase del modelo
+include "../models/Autor.php";
+$autorModel = new Autor($conn);
+$autores = $autorModel->getAuthors();
 
-    $stmt = null; // Inicializa $stmt como nulo (sin esto el programa muere)
+# Incluye la clase del modelo
+include "../models/Categoria.php";
+$categoriaModel = new Categoria($conn);
+$categorias = $categoriaModel->getCategories();
 
-    if (isset($_POST['keep_cover']) && $_POST['keep_cover'] === "on") {
-        // No actualizar la portada
-        $sql = "UPDATE libros SET titulo = ?, autor_id = ?, descripcion = ?, categoria_id = ?, precio = ?, fecha_publicacion = ? WHERE id = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(1, $titulo_libro, PDO::PARAM_STR);
-        $stmt->bindParam(2, $id_autor, PDO::PARAM_INT);
-        $stmt->bindParam(3, $descripcion_libro, PDO::PARAM_STR);
-        $stmt->bindParam(4, $id_categoria, PDO::PARAM_INT);
-        $stmt->bindParam(5, $precio_libro, PDO::PARAM_STR);
-        $stmt->bindParam(6, $anio_publicacion, PDO::PARAM_INT);
-        $stmt->bindParam(7, $id, PDO::PARAM_INT);
-    } else {
-        // Actualizar la portada
-        $extensiones_permitidas = array('jpg', 'jpeg', 'png', 'gif');
-        $resultado_subida = subir_archivo($_FILES['book_cover'], 'archivos/cover');
-        if ($resultado_subida['estado'] === 'éxito') {
-            $nombre_portada = $resultado_subida['archivo'];
+# Obtener los datos del libro a editar
+$book = $libroModel->get_book($conn, $id);
 
-            $sql = "UPDATE libros SET titulo = ?, autor_id = ?, descripcion = ?, categoria_id = ?, portada = ?, precio = ?, fecha_publicacion = ? WHERE id = ?";
-            $stmt = $conn->prepare($sql);
-            $stmt->bindParam(1, $titulo_libro, PDO::PARAM_STR);
-            $stmt->bindParam(2, $id_autor, PDO::PARAM_INT);
-            $stmt->bindParam(3, $descripcion_libro, PDO::PARAM_STR);
-            $stmt->bindParam(4, $id_categoria, PDO::PARAM_INT);
-            $stmt->bindParam(5, $nombre_portada, PDO::PARAM_STR);
-            $stmt->bindParam(6, $precio_libro, PDO::PARAM_STR);
-            $stmt->bindParam(7, $anio_publicacion, PDO::PARAM_INT);
-            $stmt->bindParam(8, $id, PDO::PARAM_INT);
-        }
-    }
+include "../models/AddCover.php";
+include "../models/EditarLibro.php";
 
-    if ($stmt !== null && $stmt->execute()) {
-        $mensaje_exito = "Libro actualizado con éxito";
-    } elseif ($stmt === null) {
-        $mensaje_error = "No se realizaron modificaciones";
-    } else {
-        $mensaje_error = "Error al actualizar el libro";
-    }
-}
 ?>
 
 <!DOCTYPE html>
@@ -85,13 +50,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- Enlace al DataTables CSS -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.10/css/jquery.dataTables.css">
     <!-- Enlace al archivo CSS personalizado -->
-    <link href="css/estilos-admin.css" rel="stylesheet">
+    <link href="../css/estilos-admin.css" rel="stylesheet">
 </head>
 <body>
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="admin.php">Admin</a>
+                <a class="navbar-brand" href="../views/MenuAdministrador.php">Admin</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -110,14 +75,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <a class="nav-link" href="anadir-autor.php">Añadir Autor</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="logout.php">Cerrar Sesión</a>
+                            <a class="nav-link" href="controller/LogoutControlador.php">Cerrar Sesión</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
 
-        <form action="editar-libro.php?id=<?= $id ?>" method="post" enctype="multipart/form-data" class="shadow p-4 rounded mt-5" style="width: 90%; max-width: 50rem;">
+        <form action="EditarLibro.php?id=<?= $id ?>" method="post" enctype="multipart/form-data" class="shadow p-4 rounded mt-5" style="width: 90%; max-width: 50rem;">
             <h1 class="text-center pb-5 display-4 fs-3">Editar Libro</h1>
             <?php if (isset($mensaje_error)) { ?>
                 <div class="alert alert-danger" role="alert">
@@ -130,13 +95,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
             <?php } ?>
             <div class="mb-3">
-                <label class="form-label">Título del libro</label>
-                <input type="text" class="form-control" name="book_title" value="<?= htmlspecialchars($book['titulo']) ?>" required>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Descripción del libro</label>
-                <textarea class="form-control" name="book_description" rows="4   <textarea class="form-control" name="book_description" rows="4" required><?= htmlspecialchars($book['descripcion']) ?></textarea>
-            </div>
+    <label class="form-label">Título del libro</label>
+    <input type="text" class="form-control" name="book_title" value="<?= isset($book) ? htmlspecialchars($book['titulo']) : '' ?>" required>
+</div>
+<div class="mb-3">
+    <label class="form-label">Descripción del libro</label>
+    <textarea class="form-control" name="book_description" rows="4" required><?= isset($book) ? htmlspecialchars($book['descripcion']) : '' ?></textarea>
+</div>
             <div class="mb-3">
                 <label class="form-label">Autor del libro</label>
                 <select class="form-select" name="book_author" required>

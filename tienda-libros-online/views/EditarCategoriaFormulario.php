@@ -9,7 +9,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_email'])) {
         exit;
     }
     $id = $_GET['id'];
-    include "../db_conexion.php";
+    include "../config/db_conexion.php";
     $categoriaModel = new Categoria($conn); // Utiliza el objeto de la clase Categoria
     $categoria = $categoriaModel->getCategoryById($id);
     if ($categoria === null) {
@@ -18,7 +18,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_email'])) {
     }
     // Aquí puedes mostrar el formulario de edición de la categoría
 } else {
-    header("Location: ../login.php");
+    header("Location: Login.php");
     exit;
 }
 ?>
@@ -60,7 +60,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_email'])) {
                             <a class="nav-link" href="AnadirAutor.php">Añadir Autor</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="../logout.php">Cerrar Sesión</a>
+                            <a class="nav-link" href="../controller/LogoutControlador.php">Cerrar Sesión</a>
                         </li>
                     </ul>
                 </div>

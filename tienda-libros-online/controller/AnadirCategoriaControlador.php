@@ -2,7 +2,7 @@
 session_start();
 
 // Incluye el archivo de conexión a la base de datos
-include '../db_conexion.php';
+include '../config/db_conexion.php';
 
 class CategoriaController {
     private $conn;
@@ -16,7 +16,7 @@ class CategoriaController {
     }
 
     public function redirigirALogin() {
-        header("Location: ../login.php");
+        header("Location: ../views/Login.php");
         exit;
     }
 

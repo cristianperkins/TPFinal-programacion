@@ -1,9 +1,9 @@
 <?php
 // Incluye el archivo que nos conecta con la base de datos
-include "../db_conexion.php";
+include "../config/db_conexion.php";
 
 // Incluye el archivo que contiene la clase de validación de formularios
-include "func-validacion.php";
+include "../models/Validacion.php";
 
 // Verifica si se ha enviado un formulario POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -77,6 +77,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 // Redirige de vuelta a la página de inicio de sesión con el mensaje de error (si existe)
-header("Location: ../login.php?error=" . urlencode($errorMensaje));
+header("Location: ../views/Login.php?error=" . urlencode($errorMensaje));
 exit;
 ?>

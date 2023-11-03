@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-include "../db_conexion.php";
+include "../config/db_conexion.php";
 include "../models/EliminarCategoria.php";
 
 class CategoriaController {
@@ -31,7 +31,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_email'])) {
         exit;
     }
 } else {
-    header("Location: ../login.php");
+    header("Location: ../views/Login.php");
     exit;
 }
 
