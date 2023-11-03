@@ -28,10 +28,10 @@ require('../controller/RegistroUsuariosControlador.php');
                     <a class="nav-link active" aria-current="page" href="../index.php">Tienda</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../contacto.php">Contacto</a>
+                        <a class="nav-link" href="Contacto.php">Contacto</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../sobre-nosotros.php">Sobre Nosotros</a>
+                        <a class="nav-link" href="SobreNosotros.php">Sobre Nosotros</a>
                     </li>
                 </ul>
             </div>
