@@ -1,4 +1,7 @@
 <?php
+
+// Probando merge
+
 # Inicia la sesión
 session_start();
 
